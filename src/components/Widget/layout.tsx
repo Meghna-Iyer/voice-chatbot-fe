@@ -11,6 +11,7 @@ import Launcher from './components/Launcher';
 import FullScreenPreview from './components/FullScreenPreview';
 
 import './style.scss';
+import HomePage from './components/HomePage';
 
 type Props = {
   title: string;
@@ -86,7 +87,7 @@ function WidgetLayout({
       messageRef.current = null;
     }
   }, [showChat])
-  
+
   const eventHandle = evt => {
     if(evt.target && evt.target.className === 'rcw-message-img') {
       const { src, alt, naturalWidth, naturalHeight } = (evt.target as HTMLImageElement);
@@ -128,7 +129,7 @@ function WidgetLayout({
       }
     >
       {showChat &&
-        <Conversation
+        <HomePage
           title={title}
           subtitle={subtitle}
           sendMessage={onSendMessage}
