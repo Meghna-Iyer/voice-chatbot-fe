@@ -1,19 +1,21 @@
-import format from 'date-fns/format';
-import markdownIt from 'markdown-it';
-import markdownItSup from 'markdown-it-sup';
-import markdownItSanitizer from 'markdown-it-sanitizer';
-import markdownItClass from '@toycode/markdown-it-class';
-import markdownItLinkAttributes from 'markdown-it-link-attributes';
-
-import { MessageTypes } from 'src/store/types';
+import React, { FC } from 'react';
 
 import './style.scss';
 
+interface ConversationsProps {
+  conversations: string[];
+}
 
-function ConversationList() {
+const ConversationList: FC<ConversationsProps> = ({ conversations }) => {
 
   return (
-    <div id="messages" className="rcw-messages-container">
+    <div className="conversations">
+      <h2>Your existing chats appear here...</h2>
+      <ul>
+        {conversations.map((conversation, index) => (
+          <li key={index}>{conversation}</li>
+        ))}
+      </ul>
     </div>
   );
 }

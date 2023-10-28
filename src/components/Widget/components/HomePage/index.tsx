@@ -11,6 +11,7 @@ import { AnyFunction } from '../../../../utils/types';
 
 import './style.scss';
 import ConversationList from './components/ConversationList';
+import Footer from './components/Footer';
 
 interface ISenderRef {
   onSelectEmoji: (event: any) => void;
@@ -79,6 +80,7 @@ function HomePage({
   const [pickerOffset, setOffset] = useState(0)
   const senderRef = useRef<ISenderRef>(null!);
   const [pickerStatus, setPicket] = useState(false)
+  const conversations = ['Conversation 1', 'Conversation 2', 'Conversation 3', 'Conversation 4', 'Conversation 5', 'Conversation 6', 'Conversation 7'];
 
   return (
     <div id="rcw-conversation-container" onMouseDown={initResize}
@@ -91,7 +93,8 @@ function HomePage({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <ConversationList typing={false}/>
+      <ConversationList conversations={conversations}/>
+      <Footer />
     </div>
   );
 }
