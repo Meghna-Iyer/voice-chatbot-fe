@@ -39,8 +39,8 @@ export default class App extends Component {
   render() {
     return (
       <Widget
-        title="Bienvenido"
-        subtitle="Asistente virtual"
+        title="Hello there!"
+        subtitle="How can we help?"
         senderPlaceHolder="Escribe aquí ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleQuickButtonClicked={this.handleQuickButtonClicked}
