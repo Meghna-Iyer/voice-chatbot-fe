@@ -77,9 +77,6 @@ function HomePage({
     window.removeEventListener('mouseup', stopResize, false);
   }
 
-  const [pickerOffset, setOffset] = useState(0)
-  const senderRef = useRef<ISenderRef>(null!);
-  const [pickerStatus, setPicket] = useState(false)
   const conversations = ['Conversation 1', 'Conversation 2', 'Conversation 3', 'Conversation 4', 'Conversation 5', 'Conversation 6', 'Conversation 7'];
 
   return (
