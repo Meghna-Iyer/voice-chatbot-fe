@@ -3,9 +3,7 @@ import { Picker } from 'emoji-mart';
 import cn from 'classnames';
 
 import Header from './components/Header';
-import Messages from './components/Messages';
-import Sender from './components/Sender';
-import QuickButtons from './components/QuickButtons';
+import axios from 'axios';
 
 import { AnyFunction } from '../../../../utils/types';
 
@@ -49,10 +47,36 @@ function HomePage({
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   let startX, startWidth;
+  const [conversationList, setConversationList] = useState([]);
 
   useEffect(() => {
     const containerDiv = document.getElementById('rcw-conversation-container');
     setContainerDiv(containerDiv);
+    const postData = {
+      username: "Anandh",
+      password: "test@12345"
+    }
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      response => {
+        const authToken = response.data?.data.access;
+        axios.get('http://127.0.0.1:8000/core/conversations/', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        }).then(response => {
+          const conversationList = [];
+          console.log(response);
+          response.data?.data?.conversations?.forEach((conversation: object) => {
+            console.log(conversation);
+            conversationList.push(conversation.title)
+          })
+          console.log(conversationList);
+          setConversationList(conversationList);
+        })
+      }
+    )
+
+
   }, []);
 
   const initResize = (e) => {
@@ -90,7 +114,7 @@ function HomePage({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <ConversationList conversations={conversations}/>
+      <ConversationList conversations={conversationList}/>
       <Footer />
     </div>
   );
