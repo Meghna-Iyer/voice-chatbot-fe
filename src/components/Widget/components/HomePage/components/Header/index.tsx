@@ -1,7 +1,8 @@
 const close = require('../../../../../../../assets/clear-button.svg') as string;
 const settingsIcon = require('../../../../../../../assets/settings-icon.svg') as string;
 import './style.scss';
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Settings from './Settings'
 
 type Props = {
@@ -14,10 +15,37 @@ type Props = {
 
 function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: Props) {
   const [isSetttingsOpen, setIsSetttingsOpen] = useState(false);
-
+  const [userSettings, setUserSettings]  = useState(null);
   const openSettings = () => {
     setIsSetttingsOpen(true);
   }
+
+  useEffect(()=> {
+    const postData = {
+      username: "Anandh",
+      password: "test@12345"
+    }
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      response => {
+        console.log(response);
+        const authToken = response.data?.data.access;
+        axios.get('http://127.0.0.1:8000/user/info/', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        }).then(response => {
+          const userSettingsFromResponse: any = {};
+          console.log(response);
+          userSettingsFromResponse.langPreference = response.data?.data?.attributes?.lang_preference;
+          userSettingsFromResponse.isChatHistoryOn = response.data?.data?.attributes?.use_chat_history;
+
+          console.log(userSettingsFromResponse);
+          setUserSettings(userSettingsFromResponse);
+        })
+      }
+    )
+
+  }, [])
 
   const closeSettings = () => {
     setIsSetttingsOpen(false);
@@ -32,7 +60,7 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
       <button onClick={openSettings} className="settingsIcon">
         <img className="settingsImg" src={settingsIcon} />
       </button>
-      {isSetttingsOpen && <Settings onClose={closeSettings}/>}
+      {isSetttingsOpen && <Settings onClose={closeSettings} userSettings={userSettings}/>}
       <h4 className="rcw-title">
         {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
         {title}

@@ -3,20 +3,20 @@ import ReactSwitch from 'react-switch';
 
 import './style.scss';
 
-const Settings = ({ onClose }) => {
+const Settings = ({ onClose, userSettings }) => {
 
   const [checked, setChecked] = useState(true);
-
+  const languagesList = ["en","es","en-us","en-uk"];
   const handleChange = val => {
     setChecked(val)
   }
-
+  console.log(userSettings);
   return (
     <div className="settings">
       <div>
         Enable history :
       <ReactSwitch
-        checked={checked}
+        checked={userSettings.isChatHistoryOn}
         onChange={handleChange}
       />
       </div>
@@ -24,8 +24,8 @@ const Settings = ({ onClose }) => {
       <div>
         <label>
           Language Preference :
-          <select>
-            <option value="en-us">en-us</option>
+          <select value={userSettings.langPreference}>
+            <option value="en">en</option>
             <option value="es">es</option>
           </select>
         </label>
