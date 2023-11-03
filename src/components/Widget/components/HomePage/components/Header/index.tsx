@@ -45,7 +45,7 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
       }
     )
 
-  }, [])
+  }, [isSetttingsOpen])
 
   const closeSettings = () => {
     setIsSetttingsOpen(false);
