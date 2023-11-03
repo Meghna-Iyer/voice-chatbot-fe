@@ -5,14 +5,24 @@ import './style.scss';
 
 const Settings = ({ onClose, userSettings }) => {
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(userSettings.isChatHistoryOn);
+  const [languagePref, setLanguagePref] = useState(userSettings.langPreference);
+  let userSettingsUpdate: any = {}
   const languagesList = ["en","es","en-us","en-uk"];
   const handleChange = val => {
     console.log(val);
     setChecked(val)
-    updateChange(val)
+    userSettingsUpdate.useChatHistory = val;
+    updateChange(userSettingsUpdate);
   }
-  function updateChange(isChecked) {
+  const handeLangChange = (e:any) => {
+    console.log('Event object:', e.target.value);
+    setLanguagePref(e.target.val);
+    userSettingsUpdate.langPreference = e.target.value;
+    updateChange(userSettingsUpdate);
+  }
+  function updateChange(userSettingsUpdate) {
+    console.log(userSettingsUpdate);
     const postData = {
       username: "Anandh",
       password: "test@12345"
@@ -22,8 +32,10 @@ const Settings = ({ onClose, userSettings }) => {
         console.log(response);
         const authToken = response.data?.data.access;
         const updateToggle = {
-          "use_chat_history": isChecked
+          "use_chat_history": userSettingsUpdate.useChatHistory,
+          "lang_preference": userSettingsUpdate.langPreference
         }
+        console.log(updateToggle);
         axios.put('http://127.0.0.1:8000/user/update/',updateToggle, {
           headers: {
             'Authorization': `Bearer ${authToken}`
@@ -34,10 +46,6 @@ const Settings = ({ onClose, userSettings }) => {
       }
     )
   }
-
-  useEffect(() => {
-    setChecked(userSettings.isChatHistoryOn);
-  },[])
 
   console.log(userSettings);
   return (
@@ -53,9 +61,10 @@ const Settings = ({ onClose, userSettings }) => {
       <div>
         <label>
           Language Preference :
-          <select value={userSettings.langPreference}>
-            <option value="en">en</option>
-            <option value="es">es</option>
+          <select value={languagePref} onChange={handeLangChange}>
+            {languagesList.map((language, index)=> (
+              <option value={language}>{language}</option>
+            ))}
           </select>
         </label>
       </div>
