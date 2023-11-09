@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 
@@ -77,6 +77,8 @@ function WidgetLayout({
     visible: state.preview.visible,
   }));
 
+  const [currentConversation, setCurrentConversation] = useState(null);
+
   const messageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -119,6 +121,11 @@ function WidgetLayout({
     document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`)
   }, [fullScreenMode, visible])
 
+  const onConversationSelect = (conversationInfo: any) => {
+    console.log(conversationInfo);
+    setCurrentConversation(conversationInfo);
+  }
+
   return (
     <div
       className={cn('rcw-widget-container', {
@@ -128,8 +135,7 @@ function WidgetLayout({
         })
       }
     >
-      {showChat &&
-        <HomePage
+      {currentConversation? (<Conversation
           title={title}
           subtitle={subtitle}
           sendMessage={onSendMessage}
@@ -148,7 +154,27 @@ function WidgetLayout({
           showTimeStamp={showTimeStamp}
           resizable={resizable}
           emojis={emojis}
-        />
+        />) : (<HomePage
+          title={title}
+          subtitle={subtitle}
+          sendMessage={onSendMessage}
+          senderPlaceHolder={senderPlaceHolder}
+          profileAvatar={profileAvatar}
+          profileClientAvatar={profileClientAvatar}
+          toggleChat={onToggleConversation}
+          showCloseButton={showCloseButton}
+          disabledInput={dissableInput}
+          autofocus={autofocus}
+          titleAvatar={titleAvatar}
+          className={showChat ? 'active' : 'hidden'}
+          onQuickButtonClicked={onQuickButtonClicked}
+          onTextInputChange={onTextInputChange}
+          sendButtonAlt={sendButtonAlt}
+          showTimeStamp={showTimeStamp}
+          resizable={resizable}
+          emojis={emojis}
+          onConversationSelect={onConversationSelect}
+        />)
       }
       {customLauncher ?
         customLauncher(onToggleConversation) :

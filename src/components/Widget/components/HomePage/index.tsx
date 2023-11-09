@@ -34,6 +34,7 @@ type Props = {
   showTimeStamp: boolean;
   resizable?: boolean;
   emojis?: boolean;
+  onConversationSelect: AnyFunction;
 };
 
 function HomePage({
@@ -44,6 +45,7 @@ function HomePage({
   toggleChat,
   titleAvatar,
   resizable,
+  onConversationSelect
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   let startX, startWidth;
@@ -64,11 +66,11 @@ function HomePage({
             'Authorization': `Bearer ${authToken}`
           }
         }).then(response => {
-          const conversationList = [];
+          const conversationList: any = [];
           console.log(response);
-          response.data?.data?.conversations?.forEach((conversation: object) => {
+          response.data?.data?.conversations?.forEach((conversation: any) => {
             console.log(conversation);
-            conversationList.push(conversation.title)
+            conversationList.push(conversation)
           })
           console.log(conversationList);
           setConversationList(conversationList);
@@ -114,7 +116,7 @@ function HomePage({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <ConversationList conversations={conversationList}/>
+      <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect}/>
       <Footer />
     </div>
   );
