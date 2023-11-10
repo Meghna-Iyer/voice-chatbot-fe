@@ -4,13 +4,9 @@ import { Widget, addResponseMessage, setQuickButtons, toggleMsgLoader, addLinkSn
 import { addUserMessage } from '..';
 
 export default class App extends Component {
-  componentDidMount() {
-    addResponseMessage('Welcome to this awesome chat!');
-    addLinkSnippet({ link: 'https://google.com', title: 'Google' });
-    addResponseMessage('![](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)');
-    addResponseMessage('![vertical](https://d2sofvawe08yqg.cloudfront.net/reintroducing-react/hero2x?1556470143)');
+  handleResponseMessage = (message: string) => {
+    addResponseMessage(message);
   }
-
   handleNewUserMessage = (newMessage: any) => {
     toggleMsgLoader();
     setTimeout(() => {
@@ -37,12 +33,15 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('testting on app level addResponseMessage');
+    console.log(this.handleResponseMessage);
     return (
       <Widget
         title="Hello there!"
         subtitle="How can we help?"
         senderPlaceHolder="Escribe aquí ..."
         handleNewUserMessage={this.handleNewUserMessage}
+        handleResponseMessage={this.handleResponseMessage}
         handleQuickButtonClicked={this.handleQuickButtonClicked}
         imagePreview
         handleSubmit={this.handleSubmit}

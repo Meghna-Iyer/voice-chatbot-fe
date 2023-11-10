@@ -34,6 +34,8 @@ type Props = {
   showTimeStamp: boolean;
   resizable?: boolean;
   emojis?: boolean;
+  testMessages?: any[];
+  addResponseMessage?: AnyFunction;
 };
 
 function Conversation({
@@ -54,7 +56,9 @@ function Conversation({
   sendButtonAlt,
   showTimeStamp,
   resizable,
-  emojis
+  emojis,
+  testMessages,
+  addResponseMessage
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   let startX, startWidth;
@@ -85,11 +89,11 @@ function Conversation({
     window.removeEventListener('mousemove', resize, false);
     window.removeEventListener('mouseup', stopResize, false);
   }
-  
+
   const [pickerOffset, setOffset] = useState(0)
   const senderRef = useRef<ISenderRef>(null!);
-  const [pickerStatus, setPicket] = useState(false) 
- 
+  const [pickerStatus, setPicket] = useState(false)
+
   const onSelectEmoji = (emoji) => {
     senderRef.current?.onSelectEmoji(emoji)
   }
@@ -102,14 +106,17 @@ function Conversation({
     sendMessage(event)
     if(pickerStatus) setPicket(false)
   }
-
+  console.log('test messages test');
+  console.log(addResponseMessage);
+  // testMessages?.forEach((message)=>{
+  //   addResponseMessage(message.content);
+  // })
   return (
-    <div id="rcw-conversation-container" onMouseDown={initResize} 
+    <div id="rcw-conversation-container" onMouseDown={initResize}
       className={cn('rcw-conversation-container', className)} aria-live="polite">
       {resizable && <div className="rcw-conversation-resizer" />}
       <Header
         title={title}
-        subtitle={subtitle}
         toggleChat={toggleChat}
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
@@ -120,7 +127,7 @@ function Conversation({
         showTimeStamp={showTimeStamp}
       />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
-      {emojis && pickerStatus && (<Picker 
+      {emojis && pickerStatus && (<Picker
         style={{ position: 'absolute', bottom: pickerOffset, left: '0', width: '100%' }}
         onSelect={onSelectEmoji}
       />)}

@@ -35,6 +35,7 @@ type Props = {
   resizable?: boolean;
   emojis?: boolean;
   onConversationSelect: AnyFunction;
+  addResponseMessage?: AnyFunction;
 };
 
 function HomePage({
@@ -45,7 +46,8 @@ function HomePage({
   toggleChat,
   titleAvatar,
   resizable,
-  onConversationSelect
+  onConversationSelect,
+  addResponseMessage
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   let startX, startWidth;
@@ -116,7 +118,7 @@ function HomePage({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect}/>
+      <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect} addResponseMessage={addResponseMessage}/>
       <Footer />
     </div>
   );

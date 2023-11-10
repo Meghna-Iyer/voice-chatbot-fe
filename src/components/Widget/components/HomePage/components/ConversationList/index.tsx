@@ -6,16 +6,17 @@ import './style.scss';
 interface ConversationsProps {
   conversations: any[];
   onConversationSelect: AnyFunction;
+  addResponseMessage: AnyFunction;
 }
 
-const ConversationList: FC<ConversationsProps> = ({ conversations, onConversationSelect }) => {
+const ConversationList: FC<ConversationsProps> = ({ conversations, onConversationSelect, addResponseMessage }) => {
 
   return (
     <div className="conversations">
       <h2>Your existing chats appear here...</h2>
       <ul>
         {conversations.map((conversation, index) => (
-          <li onClick={() => onConversationSelect(conversation)}key={index}>{conversation.title}</li>
+          <li onClick={() => onConversationSelect(conversation,addResponseMessage)}key={index}>{conversation.title}</li>
         ))}
       </ul>
     </div>

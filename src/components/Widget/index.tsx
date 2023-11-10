@@ -18,6 +18,7 @@ type Props = {
   autofocus: boolean;
   customLauncher?: AnyFunction;
   handleNewUserMessage: AnyFunction;
+  handleResponseMessage?: AnyFunction;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   chatId: string;
@@ -48,6 +49,7 @@ function Widget({
   autofocus,
   customLauncher,
   handleNewUserMessage,
+  handleResponseMessage,
   handleQuickButtonClicked,
   handleTextInputChange,
   chatId,
@@ -73,8 +75,8 @@ function Widget({
   }
 
   const handleMessageSubmit = (userInput) => {
-    if (!userInput.trim()) {      
-      return;      
+    if (!userInput.trim()) {
+      return;
     }
 
     handleSubmit?.(userInput);
@@ -86,7 +88,8 @@ function Widget({
     event.preventDefault();
     handleQuickButtonClicked?.(value)
   }
-
+  console.log("in widget component!");
+  console.log(handleResponseMessage);
   return (
     <WidgetLayout
       onToggleConversation={toggleConversation}
@@ -115,6 +118,7 @@ function Widget({
       showBadge={showBadge}
       resizable={resizable}
       emojis={emojis}
+      addResponseMessage={handleResponseMessage}
     />
   );
 }

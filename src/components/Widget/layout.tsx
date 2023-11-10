@@ -40,7 +40,8 @@ type Props = {
   zoomStep?: number;
   showBadge?: boolean;
   resizable?: boolean;
-  emojis?: boolean
+  emojis?: boolean;
+  addResponseMessage?: AnyFunction;
 }
 
 function WidgetLayout({
@@ -69,7 +70,8 @@ function WidgetLayout({
   zoomStep,
   showBadge,
   resizable,
-  emojis
+  emojis,
+  addResponseMessage
 }: Props) {
   const dispatch = useDispatch();
   const { dissableInput, showChat, visible } = useSelector((state: GlobalState) => ({
@@ -123,7 +125,7 @@ function WidgetLayout({
     document.body.setAttribute('style', `overflow: ${visible || fullScreenMode ? 'hidden' : 'auto'}`)
   }, [fullScreenMode, visible])
 
-  const onConversationSelect = (conversationInfo: any) => {
+  const onConversationSelect = (conversationInfo: any, addResponseMessage: AnyFunction) => {
     console.log(conversationInfo);
     const postData = {
       username: "Anandh",
@@ -144,13 +146,15 @@ function WidgetLayout({
           conversationWithMsgs.title = conversationInfo.title;
           console.log(conversationWithMsgs);
           setConversationWithMsgs(conversationWithMsgs);
+          conversationWithMsgs.messages.forEach((message)=>{
+            addResponseMessage(message.content);
+          })
           setCurrentConversation(conversationInfo);
         })
       }
     )
 
   }
-
   return (
     <div
       className={cn('rcw-widget-container', {
@@ -179,6 +183,7 @@ function WidgetLayout({
           showTimeStamp={showTimeStamp}
           resizable={resizable}
           emojis={emojis}
+          addResponseMessage={addResponseMessage}
         />) : (<HomePage
           title={title}
           subtitle={subtitle}
@@ -199,6 +204,7 @@ function WidgetLayout({
           resizable={resizable}
           emojis={emojis}
           onConversationSelect={onConversationSelect}
+          addResponseMessage={addResponseMessage}
         />)
       }
       {customLauncher ?
