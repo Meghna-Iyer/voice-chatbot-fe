@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import axios from 'axios';
 
 import { GlobalState } from 'src/store/types';
 import { AnyFunction } from 'src/utils/types';
@@ -78,6 +79,7 @@ function WidgetLayout({
   }));
 
   const [currentConversation, setCurrentConversation] = useState(null);
+  const [conversationWithMsgs, setConversationWithMsgs] = useState(null);
 
   const messageRef = useRef<HTMLDivElement | null>(null);
 
@@ -123,7 +125,30 @@ function WidgetLayout({
 
   const onConversationSelect = (conversationInfo: any) => {
     console.log(conversationInfo);
-    setCurrentConversation(conversationInfo);
+    const postData = {
+      username: "Anandh",
+      password: "test@12345"
+    }
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      response => {
+        const authToken = response.data?.data.access;
+        axios.get(`http://127.0.0.1:8000/core/messages/${conversationInfo.id}/`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        }).then(response => {
+          const conversationWithMsgs: any = {};
+          console.log(response);
+          conversationWithMsgs.messages = response.data?.data?.messages;
+          conversationWithMsgs.id = conversationInfo.id;
+          conversationWithMsgs.title = conversationInfo.title;
+          console.log(conversationWithMsgs);
+          setConversationWithMsgs(conversationWithMsgs);
+          setCurrentConversation(conversationInfo);
+        })
+      }
+    )
+
   }
 
   return (
@@ -136,8 +161,8 @@ function WidgetLayout({
       }
     >
       {currentConversation? (<Conversation
-          title={title}
-          subtitle={subtitle}
+          title={currentConversation.title}
+          testMessages={conversationWithMsgs?.messages}
           sendMessage={onSendMessage}
           senderPlaceHolder={senderPlaceHolder}
           profileAvatar={profileAvatar}

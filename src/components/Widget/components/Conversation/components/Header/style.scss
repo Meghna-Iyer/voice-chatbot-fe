@@ -17,6 +17,10 @@
     font-size: 24px;
     margin: 0;
     padding: 15px 0;
+    white-space: nowrap;
+    overflow: hidden; /* Hide any overflowing content */
+    text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
+    max-width: 320px;
   }
 
   .rcw-close-button {

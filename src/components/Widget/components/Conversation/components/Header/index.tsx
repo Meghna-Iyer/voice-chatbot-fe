@@ -4,13 +4,12 @@ import './style.scss';
 
 type Props = {
   title: string;
-  subtitle: string;
   toggleChat: () => void;
   showCloseButton: boolean;
   titleAvatar?: string;
 }
 
-function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: Props) {
+function Header({ title, toggleChat, showCloseButton, titleAvatar }: Props) {
   return (
     <div className="rcw-header">
       {showCloseButton &&
@@ -22,7 +21,7 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
         {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
         {title}
       </h4>
-      <span>{subtitle}</span>
+      <span>Have a Question?</span>
     </div>
   );
 }
