@@ -19,6 +19,7 @@ type Props = {
   customLauncher?: AnyFunction;
   handleNewUserMessage: AnyFunction;
   handleResponseMessage?: AnyFunction;
+  handleDropMessages?: AnyFunction;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   chatId: string;
@@ -50,6 +51,7 @@ function Widget({
   customLauncher,
   handleNewUserMessage,
   handleResponseMessage,
+  handleDropMessages,
   handleQuickButtonClicked,
   handleTextInputChange,
   chatId,
@@ -119,6 +121,7 @@ function Widget({
       resizable={resizable}
       emojis={emojis}
       addResponseMessage={handleResponseMessage}
+      handleDropMessages={handleDropMessages}
     />
   );
 }

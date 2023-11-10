@@ -13,14 +13,28 @@
     padding: 15px 0 25px;
   }
 
-  .rcw-title {
-    font-size: 24px;
-    margin: 0;
-    padding: 15px 0;
+  .conversation-title {
+    font-size: 20px;
+    margin-left: 25px;
+    margin-top: 0%;
+    align-content: right;
     white-space: nowrap;
     overflow: hidden; /* Hide any overflowing content */
     text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
-    max-width: 320px;
+    max-width: 300px;
+  }
+  .backIcon {
+    background-color: #D3BEAE;
+    top: 10px;
+    left: 10px;
+    width: 40px; /* Set the width of the SVG icon */
+    height: 40px; /* Set the height of the SVG icon */
+    border: none;
+  }
+
+  .backImg {
+    width: 40px; /* Set the width of the SVG icon */
+    height: 40px; /* Set the height of the SVG icon */
   }
 
   .rcw-close-button {

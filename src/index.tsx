@@ -9,6 +9,7 @@ import { AnyFunction } from './utils/types';
 type Props = {
   handleNewUserMessage: AnyFunction;
   handleResponseMessage?: AnyFunction;
+  handleDropMessages?: AnyFunction;
   handleQuickButtonClicked?: AnyFunction;
   title?: string;
   titleAvatar?: string;

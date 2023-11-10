@@ -1,11 +1,20 @@
 import { Component } from 'react';
 
-import { Widget, addResponseMessage, setQuickButtons, toggleMsgLoader, addLinkSnippet } from '../index';
+import { Widget, addResponseMessage, deleteMessages, setQuickButtons, toggleMsgLoader, addLinkSnippet } from '../index';
 import { addUserMessage } from '..';
 
 export default class App extends Component {
-  handleResponseMessage = (message: string) => {
-    addResponseMessage(message);
+  handleResponseMessage = (message: any) => {
+    if(message.message_user_type == 'BOT'){
+      addResponseMessage(message.content);
+    }
+    else {
+      addUserMessage(message.content);
+    }
+
+  }
+  handleDropMessages = () => {
+    deleteMessages(10);
   }
   handleNewUserMessage = (newMessage: any) => {
     toggleMsgLoader();
@@ -42,6 +51,7 @@ export default class App extends Component {
         senderPlaceHolder="Escribe aquí ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleResponseMessage={this.handleResponseMessage}
+        handleDropMessages={this.handleDropMessages}
         handleQuickButtonClicked={this.handleQuickButtonClicked}
         imagePreview
         handleSubmit={this.handleSubmit}

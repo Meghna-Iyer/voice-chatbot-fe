@@ -42,6 +42,7 @@ type Props = {
   resizable?: boolean;
   emojis?: boolean;
   addResponseMessage?: AnyFunction;
+  handleDropMessages?: AnyFunction;
 }
 
 function WidgetLayout({
@@ -71,7 +72,8 @@ function WidgetLayout({
   showBadge,
   resizable,
   emojis,
-  addResponseMessage
+  addResponseMessage,
+  handleDropMessages
 }: Props) {
   const dispatch = useDispatch();
   const { dissableInput, showChat, visible } = useSelector((state: GlobalState) => ({
@@ -146,14 +148,20 @@ function WidgetLayout({
           conversationWithMsgs.title = conversationInfo.title;
           console.log(conversationWithMsgs);
           setConversationWithMsgs(conversationWithMsgs);
-          conversationWithMsgs.messages.forEach((message)=>{
-            addResponseMessage(message.content);
+          conversationWithMsgs.messages.reverse().forEach((message)=>{
+            addResponseMessage(message);
           })
           setCurrentConversation(conversationInfo);
         })
       }
     )
 
+  }
+
+  const onBackButtonClick = (handleDropMessages) => {
+    setCurrentConversation(null);
+    setConversationWithMsgs(null);
+    handleDropMessages();
   }
   return (
     <div
@@ -184,6 +192,7 @@ function WidgetLayout({
           resizable={resizable}
           emojis={emojis}
           addResponseMessage={addResponseMessage}
+          onBackButtonClick={onBackButtonClick}
         />) : (<HomePage
           title={title}
           subtitle={subtitle}

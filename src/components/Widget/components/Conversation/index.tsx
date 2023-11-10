@@ -36,6 +36,8 @@ type Props = {
   emojis?: boolean;
   testMessages?: any[];
   addResponseMessage?: AnyFunction;
+  onBackButtonClick: AnyFunction;
+  handleDropMessages: AnyFunction;
 };
 
 function Conversation({
@@ -58,7 +60,9 @@ function Conversation({
   resizable,
   emojis,
   testMessages,
-  addResponseMessage
+  addResponseMessage,
+  onBackButtonClick,
+  handleDropMessages
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   let startX, startWidth;
@@ -106,8 +110,8 @@ function Conversation({
     sendMessage(event)
     if(pickerStatus) setPicket(false)
   }
-  console.log('test messages test');
-  console.log(addResponseMessage);
+  console.log('test onbackbutton click');
+  console.log(onBackButtonClick);
   // testMessages?.forEach((message)=>{
   //   addResponseMessage(message.content);
   // })
@@ -120,6 +124,8 @@ function Conversation({
         toggleChat={toggleChat}
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
+        onBackButtonClick={onBackButtonClick}
+        handleDropMessages={handleDropMessages}
       />
       <Messages
         profileAvatar={profileAvatar}

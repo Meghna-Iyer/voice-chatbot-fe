@@ -1,5 +1,7 @@
 const close = require('../../../../../../../assets/clear-button.svg') as string;
+const settingsIcon = require('../../../../../../../assets/back-icon.svg') as string;
 
+import { AnyFunction } from 'src/utils/types';
 import './style.scss';
 
 type Props = {
@@ -7,17 +9,17 @@ type Props = {
   toggleChat: () => void;
   showCloseButton: boolean;
   titleAvatar?: string;
+  onBackButtonClick: AnyFunction;
+  handleDropMessages: AnyFunction;
 }
 
-function Header({ title, toggleChat, showCloseButton, titleAvatar }: Props) {
+function Header({ title, toggleChat, showCloseButton, titleAvatar, onBackButtonClick, handleDropMessages }: Props) {
   return (
     <div className="rcw-header">
-      {showCloseButton &&
-        <button className="rcw-close-button" onClick={toggleChat}>
-          <img src={close} className="rcw-close" alt="close" />
-        </button>
-      }
-      <h4 className="rcw-title">
+      <button onClick={() => onBackButtonClick(handleDropMessages)} className="backIcon">
+        <img className="backImg" src={settingsIcon} />
+      </button>
+      <h4 className="conversation-title">
         {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
         {title}
       </h4>
