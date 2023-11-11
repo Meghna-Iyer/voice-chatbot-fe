@@ -30,12 +30,14 @@ export interface AddUserMessage {
   type: typeof ADD_NEW_USER_MESSAGE;
   text: string;
   id?: string;
+  timestamp: string;
 }
 
 export interface AddResponseMessage {
   type: typeof ADD_NEW_RESPONSE_MESSAGE;
   text: string;
   id?: string;
+  timestamp: string;
 }
 
 export interface ToggleMsgLoader {

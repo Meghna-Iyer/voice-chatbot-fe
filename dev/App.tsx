@@ -6,10 +6,10 @@ import { addUserMessage } from '..';
 export default class App extends Component {
   handleResponseMessage = (message: any) => {
     if(message.message_user_type == 'BOT'){
-      addResponseMessage(message.content);
+      addResponseMessage(message.content, message.created);
     }
     else {
-      addUserMessage(message.content);
+      addUserMessage(message.content, message.created);
     }
 
   }

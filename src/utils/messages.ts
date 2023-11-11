@@ -12,13 +12,21 @@ export function createNewMessage(
   text: string,
   sender: string,
   id?: string,
+  timestamp?: string,
 ): MessageI {
+  let time: Date = new Date(timestamp);
+  console.log(time);
+  if(isNaN(Date.parse(timestamp)) == true){
+    time = new Date();
+    console.log(time);
+  }
+
   return {
     type: MESSAGES_TYPES.TEXT,
     component: Message,
     text,
     sender,
-    timestamp: new Date(),
+    timestamp: time,
     showAvatar: true,
     customId: id,
     unread: sender === MESSAGE_SENDER.RESPONSE
@@ -68,7 +76,7 @@ function sinEaseOut(timestamp: any, begining: any, change: any, duration: any) {
 }
 
 /**
- * 
+ *
  * @param {*} target scroll target
  * @param {*} scrollStart
  * @param {*} scroll scroll distance

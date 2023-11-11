@@ -20,7 +20,7 @@ function Snippet({ message, showTimeStamp }: Props) {
           </a>
         </div>
       </div>
-      {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
+      {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'd/MM hh:mm.aaaa')}</span>}
     </div>
   );
 }
