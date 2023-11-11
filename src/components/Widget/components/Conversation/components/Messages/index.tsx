@@ -32,7 +32,7 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) 
     if (showChat && badgeCount) dispatch(markAllMessagesRead());
     else dispatch(setBadgeCount(messages.filter((message) => message.unread).length));
   }, [messages, badgeCount, showChat]);
-    
+
   const getComponentToRender = (message: MessageTypes | Link | CustomCompMessage) => {
     const ComponentToRender = message.component;
     if (message.type === 'component') {
@@ -54,13 +54,13 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) 
   return (
     <div id="messages" className="rcw-messages-container" ref={messageRef}>
       {messages?.map((message, index) =>
-        <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`} 
-          key={`${index}-${format(message.timestamp, 'hh:mm')}`}>
+        <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
+          key={`${index}-${format(message.timestamp, 'd/MM hh:mm.aaaa')}`}>
           {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
-            message.showAvatar && 
-            <img 
-              src={isClient(message.sender) ? profileClientAvatar : profileAvatar} 
-              className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`} 
+            message.showAvatar &&
+            <img
+              src={isClient(message.sender) ? profileClientAvatar : profileAvatar}
+              className={`rcw-avatar ${isClient(message.sender) ? 'rcw-avatar-client' : ''}`}
               alt="profile"
             />
           }

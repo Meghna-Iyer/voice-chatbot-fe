@@ -1,9 +1,16 @@
 import React, { FC } from 'react';
+import { AnyFunction } from 'src/utils/types';
 import './style.scss';
-const Footer: FC = () => {
+interface FooterProps {
+  onConversationSelect: AnyFunction;
+}
+const Footer: FC<FooterProps> = ({ onConversationSelect }) => {
+  const conversation: any = {}
+  conversation.isNew = true;
+  conversation.title = "Hey there! How's it going?"
   return (
     <div className="footer">
-      <p> start your new chat...</p>
+      <p onClick={() => onConversationSelect(conversation, undefined)}> start your new chat...</p>
     </div>
   );
 };
