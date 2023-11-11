@@ -119,7 +119,7 @@ function HomePage({
         titleAvatar={titleAvatar}
       />
       <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect} addResponseMessage={addResponseMessage}/>
-      <Footer />
+      <Footer onConversationSelect={onConversationSelect} />
     </div>
   );
 }

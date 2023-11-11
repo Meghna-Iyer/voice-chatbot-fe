@@ -128,33 +128,39 @@ function WidgetLayout({
   }, [fullScreenMode, visible])
 
   const onConversationSelect = (conversationInfo: any, addResponseMessage: AnyFunction) => {
-    console.log(conversationInfo);
-    const postData = {
-      username: "Anandh",
-      password: "test@12345"
+    if(conversationInfo.isNew) {
+      setCurrentConversation(conversationInfo);
     }
-    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
-      response => {
-        const authToken = response.data?.data.access;
-        axios.get(`http://127.0.0.1:8000/core/messages/${conversationInfo.id}/`, {
-          headers: {
-            'Authorization': `Bearer ${authToken}`
-          }
-        }).then(response => {
-          const conversationWithMsgs: any = {};
-          console.log(response);
-          conversationWithMsgs.messages = response.data?.data?.messages;
-          conversationWithMsgs.id = conversationInfo.id;
-          conversationWithMsgs.title = conversationInfo.title;
-          console.log(conversationWithMsgs);
-          setConversationWithMsgs(conversationWithMsgs);
-          conversationWithMsgs.messages.reverse().forEach((message)=>{
-            addResponseMessage(message);
-          })
-          setCurrentConversation(conversationInfo);
-        })
+    else {
+      console.log(conversationInfo);
+      const postData = {
+        username: "Anandh",
+        password: "test@12345"
       }
-    )
+      axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+        response => {
+          const authToken = response.data?.data.access;
+          axios.get(`http://127.0.0.1:8000/core/messages/${conversationInfo.id}/`, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            }
+          }).then(response => {
+            const conversationWithMsgs: any = {};
+            console.log(response);
+            conversationWithMsgs.messages = response.data?.data?.messages;
+            conversationWithMsgs.id = conversationInfo.id;
+            conversationWithMsgs.title = conversationInfo.title;
+            console.log(conversationWithMsgs);
+            setConversationWithMsgs(conversationWithMsgs);
+            conversationWithMsgs.messages.reverse().forEach((message)=>{
+              addResponseMessage(message);
+            })
+            setCurrentConversation(conversationInfo);
+          })
+        }
+      )
+    }
+
 
   }
 

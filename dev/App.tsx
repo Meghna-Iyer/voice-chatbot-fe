@@ -48,7 +48,7 @@ export default class App extends Component {
       <Widget
         title="Hello there!"
         subtitle="How can we help?"
-        senderPlaceHolder="Escribe aquí ..."
+        senderPlaceHolder="Enter your message here ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleResponseMessage={this.handleResponseMessage}
         handleDropMessages={this.handleDropMessages}
