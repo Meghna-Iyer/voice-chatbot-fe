@@ -3,6 +3,7 @@ import { Picker } from 'emoji-mart';
 import cn from 'classnames';
 import axios from 'axios';
 
+
 import Header from './components/Header';
 import Messages from './components/Messages';
 import Sender from './components/Sender';
@@ -36,7 +37,7 @@ type Props = {
   resizable?: boolean;
   emojis?: boolean;
   testMessages?: any[];
-  addResponseMessage?: AnyFunction;
+  addResponseMessage: AnyFunction;
   onBackButtonClick: AnyFunction;
   handleDropMessages: AnyFunction;
 };
@@ -110,8 +111,20 @@ function Conversation({
   console.log("inside conversation component function");
   console.log(conversationId);
   const handlerSendMsn = (event) => {
-    console.log("this is in handlerSendmsn")
-    console.log(event);
+    const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
+    console.log(ws);
+    ws.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+    ws.onmessage = (event) => {
+      console.log('Message received: ' + event.data);
+      const messagePayload = JSON.parse(event.data);
+      console.log(messagePayload);
+      if(messagePayload?.message?.message_user_type == "BOT") {
+        console.log('gonna send bot message');
+        addResponseMessage(messagePayload?.message);
+      }
+    };
     const postData = {
       username: "Anandh",
       password: "test@12345"
@@ -168,6 +181,7 @@ function Conversation({
       <Sender
         ref={senderRef}
         sendMessage={handlerSendMsn}
+        addResponseMessage={addResponseMessage}
         placeholder={senderPlaceHolder}
         disabledInput={disabledInput}
         autofocus={autofocus}
