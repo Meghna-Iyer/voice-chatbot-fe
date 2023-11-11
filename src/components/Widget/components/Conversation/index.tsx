@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { Picker } from 'emoji-mart';
 import cn from 'classnames';
+import axios from 'axios';
 
 import Header from './components/Header';
 import Messages from './components/Messages';
@@ -42,6 +43,7 @@ type Props = {
 
 function Conversation({
   title,
+  conversationId,
   subtitle,
   senderPlaceHolder,
   showCloseButton,
@@ -105,8 +107,34 @@ function Conversation({
   const togglePicker = () => {
     setPicket(prevPickerStatus => !prevPickerStatus)
   }
-
+  console.log("inside conversation component function");
+  console.log(conversationId);
   const handlerSendMsn = (event) => {
+    console.log("this is in handlerSendmsn")
+    console.log(event);
+    const postData = {
+      username: "Anandh",
+      password: "test@12345"
+    }
+    const postMessageData: any = {
+      input_text: event
+    }
+    console.log("inside send message after sending message");
+    console.log(conversationId);
+    if(conversationId)
+      postMessageData.conversation_id = conversationId;
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+        response => {
+          const authToken = response.data?.data.access;
+          axios.post('http://127.0.0.1:8000/core/chatbot/text/', postMessageData, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            }
+          }).then(response => {
+
+          })
+        }
+      )
     sendMessage(event)
     if(pickerStatus) setPicket(false)
   }
