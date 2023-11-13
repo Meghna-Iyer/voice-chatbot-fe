@@ -111,20 +111,23 @@ function Conversation({
   console.log("inside conversation component function");
   console.log(conversationId);
   const handlerSendMsn = (event) => {
-    const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
-    console.log(ws);
-    ws.onopen = () => {
-      console.log('WebSocket connection opened');
-    };
-    ws.onmessage = (event) => {
-      console.log('Message received: ' + event.data);
-      const messagePayload = JSON.parse(event.data);
-      console.log(messagePayload);
-      if(messagePayload?.message?.message_user_type == "BOT") {
-        console.log('gonna send bot message');
-        addResponseMessage(messagePayload?.message);
-      }
-    };
+    if(conversationId){
+      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
+      console.log(ws);
+      ws.onopen = () => {
+        console.log('WebSocket connection opened');
+      };
+      ws.onmessage = (event) => {
+        console.log('Message received: ' + event.data);
+        const messagePayload = JSON.parse(event.data);
+        console.log(messagePayload);
+        if(messagePayload?.message?.message_user_type == "BOT") {
+          console.log('gonna send bot message');
+          addResponseMessage(messagePayload?.message);
+        }
+      };
+    }
+
     const postData = {
       username: "Anandh",
       password: "test@12345"
@@ -144,7 +147,25 @@ function Conversation({
               'Authorization': `Bearer ${authToken}`
             }
           }).then(response => {
-
+            let wsConvId = conversationId;
+            if(!wsConvId){
+              wsConvId = response.data?.data?.conversation?.id;
+            }
+            console.log(response.data);
+            const ws = new WebSocket(`ws://localhost:8000/ws/chat/${wsConvId}/`);
+            console.log(ws);
+            ws.onopen = () => {
+              console.log('WebSocket connection opened');
+            };
+            ws.onmessage = (event) => {
+              console.log('Message received: ' + event.data);
+              const messagePayload = JSON.parse(event.data);
+              console.log(messagePayload);
+              if(messagePayload?.message?.message_user_type == "BOT") {
+                console.log('gonna send bot message');
+                addResponseMessage(messagePayload?.message);
+              }
+    };
           })
         }
       )

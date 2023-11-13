@@ -6,7 +6,8 @@ import { GlobalState } from 'src/store/types';
 
 import { getCaretIndex, isFirefox, updateCaret, insertNodeAtCaret, getSelection } from '../../../../../../utils/contentEditable'
 const send = require('../../../../../../../assets/send_button.svg') as string;
-const emoji = require('../../../../../../../assets/icon-smiley.svg') as string;
+const recordingState = require('../../../../../../../assets/voice-record.gif') as string;
+const voiceRecord = require('../../../../../../../assets/voice-record.svg') as string
 const brRegex = /<br>/g;
 
 import './style.scss';
@@ -25,6 +26,7 @@ type Props = {
 function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize }: Props, ref) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
+  const [isRecording, setIsRecording] = useState(false);
   const refContainer = useRef<HTMLDivElement>(null);
   const [enter, setEnter]= useState(false)
   const [firefox, setFirefox] = useState(false);
@@ -106,7 +108,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
 
   const handlerOnKeyDown= (event) => {
     const el = inputRef.current;
-    
+
     if( event.key === 'Backspace' && el){
       const caretPosition = getCaretIndex(inputRef.current);
       const character = el.innerHTML.charAt(caretPosition - 1);
@@ -119,15 +121,22 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
     }
   }
 
-  const handlerPressEmoji = () => {
-    onPressEmoji();
-    checkSize();
+  const handleVoiceNotePress = () => {
+    if(isRecording)
+      setIsRecording(false);
+    else {
+      setIsRecording(true);
+    }
+    // onPressEmoji();
+    // checkSize();
   }
 
   return (
     <div ref={refContainer} className="rcw-sender">
-      <button className='rcw-picker-btn' type="submit" onClick={handlerPressEmoji}>
-        <img src={emoji} className="rcw-picker-icon" alt="" />
+      <button className='voiceButton' type="submit" onClick={handleVoiceNotePress}>
+        {isRecording?
+        <img src={recordingState} className="recordingState" alt="" />:
+        <img src={voiceRecord} className="voiceIcon" alt="" />}
       </button>
       <div className={cn('rcw-new-message', {
           'rcw-message-disable': disabledInput,
@@ -137,7 +146,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
           spellCheck
           className="rcw-input"
           role="textbox"
-          contentEditable={!disabledInput} 
+          contentEditable={!disabledInput}
           ref={inputRef}
           placeholder={placeholder}
           onInput={handlerOnChange}
@@ -145,7 +154,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
           onKeyUp={handlerOnKeyUp}
           onKeyDown={handlerOnKeyDown}
         />
-        
+
       </div>
       <button type="submit" className="rcw-send" onClick={handlerSendMessage}>
         <img src={send} className="rcw-send-icon" alt={buttonAlt} />
