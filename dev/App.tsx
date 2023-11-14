@@ -18,14 +18,14 @@ export default class App extends Component {
   }
   handleNewUserMessage = (newMessage: any) => {
     toggleMsgLoader();
-    setTimeout(() => {
-      toggleMsgLoader();
-      if (newMessage === 'fruits') {
-        setQuickButtons([ { label: 'Apple', value: 'apple' }, { label: 'Orange', value: 'orange' }, { label: 'Pear', value: 'pear' }, { label: 'Banana', value: 'banana' } ]);
-      } else {
-        addResponseMessage(newMessage);
-      }
-    }, 2000);
+    // setTimeout(() => {
+    //   toggleMsgLoader();
+    //   if (newMessage === 'fruits') {
+    //     setQuickButtons([ { label: 'Apple', value: 'apple' }, { label: 'Orange', value: 'orange' }, { label: 'Pear', value: 'pear' }, { label: 'Banana', value: 'banana' } ]);
+    //   } else {
+    //     addResponseMessage(newMessage);
+    //   }
+    // }, 2000);
   }
 
   handleQuickButtonClicked = (e: any) => {
@@ -34,10 +34,6 @@ export default class App extends Component {
   }
 
   handleSubmit = (msgText: string) => {
-    if(msgText.length < 80) {
-      addUserMessage("Uh oh, please write a bit more.");
-      return false;
-    }
     return true;
   }
 

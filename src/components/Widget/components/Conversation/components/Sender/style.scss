@@ -50,7 +50,7 @@
 
   &[placeholder]:empty::before {
     content: attr(placeholder);
-    color: $grey-0; 
+    color: $grey-0;
   }
 }
 
@@ -62,6 +62,22 @@
   .rcw-send-icon {
     height: 25px;
   }
+}
+
+.voiceButton {
+  height: 35px;
+  border: 0;
+  padding: 4px;
+  cursor: pointer;
+  background-color: $grey-2;
+  // border-color: #e74c3c;
+}
+.recordingState {
+  height: 20px;
+}
+
+.voiceIcon {
+  height: 35px;
 }
 
 .rcw-message-disable {

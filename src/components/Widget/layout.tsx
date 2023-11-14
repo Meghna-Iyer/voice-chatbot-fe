@@ -180,6 +180,7 @@ function WidgetLayout({
     >
       {currentConversation? (<Conversation
           title={currentConversation.title}
+          conversationId={currentConversation.id}
           testMessages={conversationWithMsgs?.messages}
           sendMessage={onSendMessage}
           senderPlaceHolder={senderPlaceHolder}

@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { Picker } from 'emoji-mart';
 import cn from 'classnames';
+import axios from 'axios';
+
 
 import Header from './components/Header';
 import Messages from './components/Messages';
@@ -35,13 +37,14 @@ type Props = {
   resizable?: boolean;
   emojis?: boolean;
   testMessages?: any[];
-  addResponseMessage?: AnyFunction;
+  addResponseMessage: AnyFunction;
   onBackButtonClick: AnyFunction;
   handleDropMessages: AnyFunction;
 };
 
 function Conversation({
   title,
+  conversationId,
   subtitle,
   senderPlaceHolder,
   showCloseButton,
@@ -105,8 +108,67 @@ function Conversation({
   const togglePicker = () => {
     setPicket(prevPickerStatus => !prevPickerStatus)
   }
-
+  console.log("inside conversation component function");
+  console.log(conversationId);
   const handlerSendMsn = (event) => {
+    if(conversationId){
+      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
+      console.log(ws);
+      ws.onopen = () => {
+        console.log('WebSocket connection opened');
+      };
+      ws.onmessage = (event) => {
+        console.log('Message received: ' + event.data);
+        const messagePayload = JSON.parse(event.data);
+        console.log(messagePayload);
+        if(messagePayload?.message?.message_user_type == "BOT") {
+          console.log('gonna send bot message');
+          addResponseMessage(messagePayload?.message);
+        }
+      };
+    }
+
+    const postData = {
+      username: "Anandh",
+      password: "test@12345"
+    }
+    const postMessageData: any = {
+      input_text: event
+    }
+    console.log("inside send message after sending message");
+    console.log(conversationId);
+    if(conversationId)
+      postMessageData.conversation_id = conversationId;
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+        response => {
+          const authToken = response.data?.data.access;
+          axios.post('http://127.0.0.1:8000/core/chatbot/text/', postMessageData, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            }
+          }).then(response => {
+            let wsConvId = conversationId;
+            if(!wsConvId){
+              wsConvId = response.data?.data?.conversation?.id;
+            }
+            console.log(response.data);
+            const ws = new WebSocket(`ws://localhost:8000/ws/chat/${wsConvId}/`);
+            console.log(ws);
+            ws.onopen = () => {
+              console.log('WebSocket connection opened');
+            };
+            ws.onmessage = (event) => {
+              console.log('Message received: ' + event.data);
+              const messagePayload = JSON.parse(event.data);
+              console.log(messagePayload);
+              if(messagePayload?.message?.message_user_type == "BOT") {
+                console.log('gonna send bot message');
+                addResponseMessage(messagePayload?.message);
+              }
+    };
+          })
+        }
+      )
     sendMessage(event)
     if(pickerStatus) setPicket(false)
   }
@@ -140,6 +202,7 @@ function Conversation({
       <Sender
         ref={senderRef}
         sendMessage={handlerSendMsn}
+        addResponseMessage={addResponseMessage}
         placeholder={senderPlaceHolder}
         disabledInput={disabledInput}
         autofocus={autofocus}
