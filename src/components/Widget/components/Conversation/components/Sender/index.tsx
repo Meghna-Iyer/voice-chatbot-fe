@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { GlobalState } from 'src/store/types';
+import axios from 'axios';
 
 import { getCaretIndex, isFirefox, updateCaret, insertNodeAtCaret, getSelection } from '../../../../../../utils/contentEditable'
 const send = require('../../../../../../../assets/send_button.svg') as string;
@@ -31,6 +32,9 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const [enter, setEnter]= useState(false)
   const [firefox, setFirefox] = useState(false);
   const [height, setHeight] = useState(0)
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioBlob, setAudioBlob] = useState(null);
+  let recordedChunks = [];
   // @ts-ignore
   useEffect(() => { if (showChat && autofocus) inputRef.current?.focus(); }, [showChat]);
   useEffect(() => { setFirefox(isFirefox())}, [])
@@ -44,13 +48,20 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const handlerOnChange = (event) => {
     onTextInputChange && onTextInputChange(event)
   }
-
   const handlerSendMessage = () => {
-    const el = inputRef.current;
-    if(el.innerHTML) {
-      sendMessage(el.innerText);
-      el.innerHTML = ''
+    if(audioBlob){
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'recorded_audio.ogg');
+      console.log(formData);
     }
+    else {
+      const el = inputRef.current;
+      if(el.innerHTML) {
+        sendMessage(el.innerText);
+        el.innerHTML = ''
+      }
+    }
+
   }
 
   const handlerOnSelectEmoji = (emoji) => {
@@ -122,10 +133,59 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   }
 
   const handleVoiceNotePress = () => {
-    if(isRecording)
+    if(isRecording){
       setIsRecording(false);
+      mediaRecorder.stop();
+      recordedChunks = [];
+      setMediaRecorder(null);
+    }
     else {
       setIsRecording(true);
+      navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+          const mediaRecorderTemp = new MediaRecorder(stream);
+          setMediaRecorder(mediaRecorderTemp);
+          mediaRecorderTemp.ondataavailable = event => {
+              if (event.data.size > 0) {
+                  recordedChunks.push(event.data);
+              }
+          };
+          mediaRecorderTemp.onstop = () => {
+              const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
+              const audioUrl = URL.createObjectURL(audioBlob);
+              // audioElement.src = audioUrl;
+
+              // Send audio to the server
+              console.log(audioBlob);
+              console.log(`Audio url: ${audioUrl}`);
+              // const audio = new Audio(audioUrl);
+              // audio.play();
+
+              const postData = {
+                username: "Anandh",
+                password: "test@12345"
+              }
+              const formData = new FormData();
+              formData.append("audio", audioBlob, 'test_audio.wav');
+              axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+                response => {
+                  const authToken = response.data?.data.access;
+                  axios.post(`http://127.0.0.1:8000/core/chatbot/voice/`,formData, {
+                    headers: {
+                      'Authorization': `Bearer ${authToken}`,
+                      'Content-Type': 'multipart/form-data'
+                    }
+                  }).then(response => {
+                    console.log(response);
+                  })
+                }
+              )
+          };
+          mediaRecorderTemp.start();
+      })
+      .catch(error => {
+        console.error("Error accessing microphone:", error);
+    });
     }
     // onPressEmoji();
     // checkSize();
