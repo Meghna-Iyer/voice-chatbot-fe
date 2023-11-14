@@ -139,10 +139,10 @@ function Conversation({
     console.log(conversationId);
     if(conversationId)
       postMessageData.conversation_id = conversationId;
-    axios.post('http://meghna.ngrok.io/user/auth/token/', postData).then(
+    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
         response => {
           const authToken = response.data?.data.access;
-          axios.post('http://meghna.ngrok.io/core/chatbot/text/', postMessageData, {
+          axios.post('http://127.0.0.1:8000/core/chatbot/text/', postMessageData, {
             headers: {
               'Authorization': `Bearer ${authToken}`
             }
