@@ -163,7 +163,8 @@ function WidgetLayout({
 
 
   }
-
+  console.log("in layout");
+  console.log(handleDropMessages);
   const onBackButtonClick = (handleDropMessages) => {
     setCurrentConversation(null);
     setConversationWithMsgs(null);
@@ -200,6 +201,7 @@ function WidgetLayout({
           emojis={emojis}
           addResponseMessage={addResponseMessage}
           onBackButtonClick={onBackButtonClick}
+          handleDropMessages={handleDropMessages}
         />) : (<HomePage
           title={title}
           subtitle={subtitle}

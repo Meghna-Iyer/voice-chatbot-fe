@@ -19,7 +19,7 @@ type Props = {
   customLauncher?: AnyFunction;
   handleNewUserMessage: AnyFunction;
   handleResponseMessage?: AnyFunction;
-  handleDropMessages?: AnyFunction;
+  handleDropMessages: AnyFunction;
   handleQuickButtonClicked?: AnyFunction;
   handleTextInputChange?: (event: any) => void;
   chatId: string;
@@ -91,7 +91,7 @@ function Widget({
     handleQuickButtonClicked?.(value)
   }
   console.log("in widget component!");
-  console.log(handleResponseMessage);
+  console.log(handleDropMessages);
   return (
     <WidgetLayout
       onToggleConversation={toggleConversation}

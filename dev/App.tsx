@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { Widget, addResponseMessage, deleteMessages, setQuickButtons, toggleMsgLoader, addLinkSnippet } from '../index';
+import { Widget, addResponseMessage, deleteMessages, setQuickButtons, toggleMsgLoader, addLinkSnippet, dropMessages } from '../index';
 import { addUserMessage } from '..';
 
 export default class App extends Component {
@@ -16,7 +16,7 @@ export default class App extends Component {
 
   }
   handleDropMessages = () => {
-    deleteMessages(10);
+    dropMessages();
   }
   handleNewUserMessage = (newMessage: any) => {
     toggleMsgLoader();
@@ -41,7 +41,7 @@ export default class App extends Component {
 
   render() {
     console.log('testting on app level addResponseMessage');
-    console.log(this.handleResponseMessage);
+    console.log(this.handleDropMessages);
     return (
       <Widget
         title="Hello there!"
