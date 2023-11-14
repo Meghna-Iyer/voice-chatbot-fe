@@ -15,12 +15,13 @@ export function toggleInputDisabled(): actionsTypes.ToggleInputDisabled {
   };
 }
 
-export function addUserMessage(text: string, timestamp: string, id?: string): actionsTypes.AddUserMessage {
+export function addUserMessage(text: string, timestamp: string, reference: string, id?: string): actionsTypes.AddUserMessage {
   return {
     type: actionsTypes.ADD_NEW_USER_MESSAGE,
     text,
     id,
-    timestamp
+    timestamp,
+    reference
   };
 }
 

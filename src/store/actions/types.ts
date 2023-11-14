@@ -31,6 +31,7 @@ export interface AddUserMessage {
   text: string;
   id?: string;
   timestamp: string;
+  reference: string;
 }
 
 export interface AddResponseMessage {

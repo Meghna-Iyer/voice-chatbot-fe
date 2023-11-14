@@ -12,6 +12,7 @@ export function createNewMessage(
   text: string,
   sender: string,
   id?: string,
+  reference?: string,
   timestamp?: string,
 ): MessageI {
   let time: Date = new Date(timestamp);
@@ -27,6 +28,7 @@ export function createNewMessage(
     text,
     sender,
     timestamp: time,
+    reference: reference,
     showAvatar: true,
     customId: id,
     unread: sender === MESSAGE_SENDER.RESPONSE

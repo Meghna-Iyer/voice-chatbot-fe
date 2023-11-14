@@ -9,7 +9,9 @@ export default class App extends Component {
       addResponseMessage(message.content, message.created);
     }
     else {
-      addUserMessage(message.content, message.created);
+      console.log("newwww")
+      console.log(message.reference)
+      addUserMessage(message.content, message.created, message.reference);
     }
 
   }

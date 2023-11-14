@@ -22,11 +22,11 @@ const initialState = {
 };
 
 const messagesReducer = {
-  [ADD_NEW_USER_MESSAGE]: (state: MessagesState, { text, showClientAvatar, id, timestamp }) =>
-    ({ ...state, messages: [...state.messages, createNewMessage(text, MESSAGE_SENDER.CLIENT, id, timestamp)]}),
+  [ADD_NEW_USER_MESSAGE]: (state: MessagesState, { text, showClientAvatar, id, reference, timestamp }) =>
+    ({ ...state, messages: [...state.messages, createNewMessage(text, MESSAGE_SENDER.CLIENT, id, reference, timestamp)]}),
 
   [ADD_NEW_RESPONSE_MESSAGE]: (state: MessagesState, { text, id, timestamp }) =>
-    ({ ...state, messages: [...state.messages, createNewMessage(text, MESSAGE_SENDER.RESPONSE, id, timestamp)], badgeCount: state.badgeCount + 1 }),
+    ({ ...state, messages: [...state.messages, createNewMessage(text, MESSAGE_SENDER.RESPONSE, id, undefined, timestamp)], badgeCount: state.badgeCount + 1 }),
 
   [ADD_NEW_LINK_SNIPPET]: (state: MessagesState, { link, id }) =>
     ({ ...state, messages: [...state.messages, createLinkSnippet(link, id)] }),

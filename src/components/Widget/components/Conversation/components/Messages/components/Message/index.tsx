@@ -23,10 +23,12 @@ function Message({ message, showTimeStamp }: Props) {
     .use(markdownItSanitizer)
     .use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } })
     .render(message.text);
-
+    console.log("blah")
+    console.log(message)
+    console.log(message.reference)
   return (
     <div className={`rcw-${message.sender}`}>
-      <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML.replace(/\n$/,'') }} />
+      <div className="rcw-message-text"><p>{{message.text}}</p></div>
       {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'd/MM hh:mm.aaaa')}</span>}
     </div>
   );

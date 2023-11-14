@@ -6,6 +6,7 @@ type BaseMessage = {
   sender: string;
   showAvatar: boolean;
   timestamp: Date;
+  reference: string;
   unread: boolean;
   customId?: string;
   props?: any;
