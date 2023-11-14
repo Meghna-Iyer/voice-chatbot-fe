@@ -55,6 +55,10 @@ const Settings = ({ onClose, userSettings }) => {
       <ReactSwitch
         checked={checked}
         onChange={handleChange}
+        onColor='#99755D'
+        offColor='#99755D'
+        height={20}
+        width={40}
       />
       </div>
 
@@ -67,9 +71,6 @@ const Settings = ({ onClose, userSettings }) => {
             ))}
           </select>
         </label>
-      </div>
-      <div>
-      <button className='closeSettings' onClick={onClose}>Close</button>
       </div>
       </div>
   );

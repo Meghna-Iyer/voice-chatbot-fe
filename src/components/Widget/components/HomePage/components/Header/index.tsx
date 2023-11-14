@@ -17,8 +17,8 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
   const [isSetttingsOpen, setIsSetttingsOpen] = useState(false);
   const [userSettings, setUserSettings]  = useState(null);
   const openSettings = () => {
-    setIsSetttingsOpen(true);
-  }
+    setIsSetttingsOpen(!isSetttingsOpen); // Toggle the state
+  };
 
   useEffect(()=> {
     const postData = {
@@ -52,11 +52,6 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
   }
   return (
     <div className="rcw-header">
-      {showCloseButton &&
-        <button className="rcw-close-button" onClick={toggleChat}>
-          <img src={close} className="rcw-close" alt="close" />
-        </button>
-      }
       <button onClick={openSettings} className="settingsIcon">
         <img className="settingsImg" src={settingsIcon} />
       </button>
