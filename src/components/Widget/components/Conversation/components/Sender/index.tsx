@@ -232,11 +232,6 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
 
   return (
     <div ref={refContainer} className="rcw-sender">
-      <button className='voiceButton' type="submit" onClick={handleVoiceNotePress}>
-        {isRecording?
-        <img src={recordingState} className="recordingState" alt="" />:
-        <img src={voiceRecord} className="voiceIcon" alt="" />}
-      </button>
       <div className={cn('rcw-new-message', {
           'rcw-message-disable': disabledInput,
         })
@@ -255,6 +250,11 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
         />
 
       </div>
+      <button className='voiceButton' type="submit" onClick={handleVoiceNotePress}>
+        {isRecording?
+        <img src={recordingState} className="recordingState" alt="" />:
+        <img src={voiceRecord} className="voiceIcon" alt="" />}
+      </button>
       <button type="submit" className="rcw-send" onClick={handlerSendMessage}>
         <img src={send} className="rcw-send-icon" alt={buttonAlt} />
       </button>
