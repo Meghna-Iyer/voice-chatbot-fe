@@ -20,6 +20,7 @@
 }
 
 .rcw-open-launcher {
+  width: 50px;
   @include animation(0, 0.5s, rotation-rl);
 }
 
