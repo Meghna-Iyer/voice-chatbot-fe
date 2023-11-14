@@ -24,8 +24,8 @@ const Settings = ({ onClose, userSettings }) => {
   function updateChange(userSettingsUpdate) {
     console.log(userSettingsUpdate);
     const postData = {
-      username: "Megh",
-      password: "Test@12345"
+      username: "Anandh",
+      password: "test@12345"
     }
     axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
       response => {

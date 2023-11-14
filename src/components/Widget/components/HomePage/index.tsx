@@ -57,8 +57,8 @@ function HomePage({
     const containerDiv = document.getElementById('rcw-conversation-container');
     setContainerDiv(containerDiv);
     const postData = {
-      username: "Megh",
-      password: "Test@12345"
+      username: "Anandh",
+      password: "test@12345"
     }
     axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
       response => {
