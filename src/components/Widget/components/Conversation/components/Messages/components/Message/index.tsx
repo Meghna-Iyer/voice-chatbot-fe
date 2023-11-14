@@ -17,7 +17,7 @@ function Message({ message, showTimeStamp }: Props) {
       const audio = new Audio(`http://127.0.0.1:8000${message.reference}`);
       audio.play();
     }
-    else if(message.sender == 'response') {
+    else  {
       const postData = {
         username: "Anandh",
         password: "test@12345"
@@ -48,14 +48,20 @@ function Message({ message, showTimeStamp }: Props) {
       )
     }
   }
-  let sanitizedHTML = message.reference || message.sender == "response" ? message.text + "🔊": message.text;
+  let sanitizedHTML =  message.text + "🔊"
   console.log(message);
 
   return (
     <div className={`rcw-${message.sender}`}>
-      <div className="rcw-message-text">
-        <p onClick={()=>handleOnMessageClick(message)}>{sanitizedHTML}</p>
-      </div>
+      <div key={message.id}>
+  {message.reference ? (
+    <audio id="audioElement" controls src={`http://127.0.0.1:8000${message.reference}`}></audio>
+  ) : (
+    <div className="rcw-message-text">
+      <p onClick={() => handleOnMessageClick(message)}>{sanitizedHTML}</p>
+    </div>
+  )}
+</div>
       {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'd/MM hh:mm.aaaa')}</span>}
     </div>
   );
