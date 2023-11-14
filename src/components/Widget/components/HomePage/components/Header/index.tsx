@@ -25,11 +25,11 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
       username: "Megh",
       password: "Test@12345"
     }
-    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+    axios.post('http://meghna.ngrok.io/user/auth/token/', postData).then(
       response => {
         console.log(response);
         const authToken = response.data?.data.access;
-        axios.get('http://127.0.0.1:8000/user/info/', {
+        axios.get('http://meghna.ngrok.io/user/info/', {
           headers: {
             'Authorization': `Bearer ${authToken}`
           }

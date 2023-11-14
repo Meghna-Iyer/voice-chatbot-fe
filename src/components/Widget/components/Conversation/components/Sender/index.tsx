@@ -167,17 +167,17 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               }
               const formData = new FormData();
               formData.append("audio", audioBlob, 'test_audio.wav');
-              axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+              axios.post('http://meghna.ngrok.io/user/auth/token/', postData).then(
                 response => {
                   const authToken = response.data?.data.access;
-                  axios.post(`http://127.0.0.1:8000/core/chatbot/voice/`,formData, {
+                  axios.post(`http://meghna.ngrok.io/core/chatbot/voice/`,formData, {
                     headers: {
                       'Authorization': `Bearer ${authToken}`,
                       'Content-Type': 'multipart/form-data'
                     }
                   }).then(response => {
                     console.log(response);
-                    const audio = new Audio('http://127.0.0.1:8000/media/audio/user_3c5249c0-1003-4f29-be92-e233e20034a1/conv_31f81502-466c-4010-bfca-3101456caa27/2353cd526e4d49b3bcb06fe01b90a9fe_test_audio.wav');
+                    const audio = new Audio('http://meghna.ngrok.io/media/audio/user_3c5249c0-1003-4f29-be92-e233e20034a1/conv_31f81502-466c-4010-bfca-3101456caa27/2353cd526e4d49b3bcb06fe01b90a9fe_test_audio.wav');
                     audio.play();
                   })
                 }

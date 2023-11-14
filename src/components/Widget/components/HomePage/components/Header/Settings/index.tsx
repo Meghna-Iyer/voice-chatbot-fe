@@ -27,7 +27,7 @@ const Settings = ({ onClose, userSettings }) => {
       username: "Megh",
       password: "Test@12345"
     }
-    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+    axios.post('http://meghna.ngrok.io/user/auth/token/', postData).then(
       response => {
         console.log(response);
         const authToken = response.data?.data.access;
@@ -36,7 +36,7 @@ const Settings = ({ onClose, userSettings }) => {
           "lang_preference": userSettingsUpdate.langPreference
         }
         console.log(updateToggle);
-        axios.put('http://127.0.0.1:8000/user/update/',updateToggle, {
+        axios.put('http://meghna.ngrok.io/user/update/',updateToggle, {
           headers: {
             'Authorization': `Bearer ${authToken}`
           }

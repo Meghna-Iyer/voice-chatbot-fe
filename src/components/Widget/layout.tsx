@@ -137,10 +137,10 @@ function WidgetLayout({
         username: "Megh",
         password: "Test@12345"
       }
-      axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      axios.post('http://meghna.ngrok.io/user/auth/token/', postData).then(
         response => {
           const authToken = response.data?.data.access;
-          axios.get(`http://127.0.0.1:8000/core/messages/${conversationInfo.id}/`, {
+          axios.get(`http://meghna.ngrok.io/core/messages/${conversationInfo.id}/`, {
             headers: {
               'Authorization': `Bearer ${authToken}`
             }
