@@ -12,19 +12,22 @@ const voiceRecord = require('../../../../../../../assets/voice-record.svg') as s
 const brRegex = /<br>/g;
 
 import './style.scss';
+import { AnyFunction } from 'src/utils/types';
 
 type Props = {
   placeholder: string;
   disabledInput: boolean;
   autofocus: boolean;
+  conversationId: string;
   sendMessage: (event: any) => void;
   buttonAlt: string;
   onPressEmoji: () => void;
   onChangeSize: (event: any) => void;
   onTextInputChange?: (event: any) => void;
+  addResponseMessage: AnyFunction;
 }
 
-function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize }: Props, ref) {
+function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize, conversationId, addResponseMessage  }: Props, ref) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const [isRecording, setIsRecording] = useState(false);
@@ -161,12 +164,35 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               // const audio = new Audio(audioUrl);
               // audio.play();
 
+              if(conversationId) {
+                const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
+              console.log(ws);
+              ws.onopen = () => {
+                console.log('WebSocket connection opened');
+              };
+              ws.onmessage = (event) => {
+                console.log('Message received: ' + event.data);
+                const messagePayload = JSON.parse(event.data);
+                console.log(messagePayload);
+                if(messagePayload?.message?.message_user_type == "BOT") {
+                  console.log('gonna send bot message');
+                  addResponseMessage(messagePayload?.message);
+                }
+              };
+              }
               const postData = {
                 username: "Anandh",
                 password: "test@12345"
               }
               const formData = new FormData();
               formData.append("audio", audioBlob, 'test_audio.wav');
+              let message: any = {};
+              message.message_user_type = 'user'
+              message.content = 'PRE_CREATED';
+              message.reference = new String(audioUrl);
+              message.created = new Date().toLocaleString();
+              console.log(message);
+              addResponseMessage(message);
               axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
                 response => {
                   const authToken = response.data?.data.access;
@@ -177,6 +203,10 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                     }
                   }).then(response => {
                     console.log(response);
+                    console.log("new chat coming from response");
+                    const incomingMessages = response.data?.data?.messages;
+                    // addResponseMessage(incomingMessages[0]);
+                    addResponseMessage(incomingMessages[1]);
                   })
                 }
               )

@@ -148,24 +148,29 @@ function Conversation({
             }
           }).then(response => {
             let wsConvId = conversationId;
+            console.log(response);
             if(!wsConvId){
-              wsConvId = response.data?.data?.conversation?.id;
+              console.log("new chat coming from response");
+              const newChatMsg = response.data?.data?.messages[1];
+              addResponseMessage(newChatMsg);
             }
-            console.log(response.data);
-            const ws = new WebSocket(`ws://localhost:8000/ws/chat/${wsConvId}/`);
-            console.log(ws);
-            ws.onopen = () => {
-              console.log('WebSocket connection opened');
-            };
-            ws.onmessage = (event) => {
-              console.log('Message received: ' + event.data);
-              const messagePayload = JSON.parse(event.data);
-              console.log(messagePayload);
-              if(messagePayload?.message?.message_user_type == "BOT") {
-                console.log('gonna send bot message');
-                addResponseMessage(messagePayload?.message);
-              }
-    };
+            else {
+              const ws = new WebSocket(`ws://localhost:8000/ws/chat/${wsConvId}/`);
+              console.log(ws);
+              ws.onopen = () => {
+                console.log('WebSocket connection opened');
+              };
+              ws.onmessage = (event) => {
+                console.log('Message received: ' + event.data);
+                const messagePayload = JSON.parse(event.data);
+                console.log(messagePayload);
+                if(messagePayload?.message?.message_user_type == "BOT") {
+                  console.log('gonna send bot message');
+                  addResponseMessage(messagePayload?.message);
+                }
+              };
+            }
+
           })
         }
       )
@@ -202,6 +207,7 @@ function Conversation({
       <Sender
         ref={senderRef}
         sendMessage={handlerSendMsn}
+        conversationId={conversationId}
         addResponseMessage={addResponseMessage}
         placeholder={senderPlaceHolder}
         disabledInput={disabledInput}
