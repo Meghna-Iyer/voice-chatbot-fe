@@ -37,6 +37,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const [height, setHeight] = useState(0)
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioBlob, setAudioBlob] = useState(null);
+  const [conversationIdState, setConversationIdState] = useState(conversationId);
   let recordedChunks = [];
   // @ts-ignore
   useEffect(() => { if (showChat && autofocus) inputRef.current?.focus(); }, [showChat]);
@@ -164,21 +165,22 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               // const audio = new Audio(audioUrl);
               // audio.play();
 
-              if(conversationId) {
-                const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
-              console.log(ws);
-              ws.onopen = () => {
-                console.log('WebSocket connection opened');
-              };
-              ws.onmessage = (event) => {
-                console.log('Message received: ' + event.data);
-                const messagePayload = JSON.parse(event.data);
-                console.log(messagePayload);
-                if(messagePayload?.message?.message_user_type == "BOT") {
-                  console.log('gonna send bot message');
-                  addResponseMessage(messagePayload?.message);
-                }
-              };
+              if(conversationIdState) {
+                console.log(`Websocket opening for ${conversationIdState}`)
+                const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationIdState}/`);
+                console.log(ws);
+                ws.onopen = () => {
+                  console.log('WebSocket connection opened');
+                };
+                ws.onmessage = (event) => {
+                  console.log('Message received: ' + event.data);
+                  const messagePayload = JSON.parse(event.data);
+                  console.log(messagePayload);
+                  if(messagePayload?.message?.message_user_type == "BOT") {
+                    console.log('gonna send bot message');
+                    addResponseMessage(messagePayload?.message);
+                  }
+                };
               }
               const postData = {
                 username: "Anandh",
@@ -186,6 +188,9 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               }
               const formData = new FormData();
               formData.append("audio", audioBlob, 'test_audio.wav');
+              if(conversationIdState) {
+                formData.append("conversation_id", conversationIdState)
+              }
               let message: any = {};
               message.message_user_type = 'user'
               message.content = 'PRE_CREATED';
@@ -205,8 +210,12 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                     console.log(response);
                     console.log("new chat coming from response");
                     const incomingMessages = response.data?.data?.messages;
-                    // addResponseMessage(incomingMessages[0]);
-                    addResponseMessage(incomingMessages[1]);
+                    if(!conversationIdState){
+                      setConversationIdState(response.data?.data?.conversation.id)
+                      // addResponseMessage(incomingMessages[0]);
+                      addResponseMessage(incomingMessages[1]);
+                    }
+
                   })
                 }
               )

@@ -68,6 +68,7 @@ function Conversation({
   handleDropMessages
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
+  const [conversationIdState, setConversationIdState] = useState(conversationId);
   let startX, startWidth;
 
   useEffect(() => {
@@ -109,10 +110,10 @@ function Conversation({
     setPicket(prevPickerStatus => !prevPickerStatus)
   }
   console.log("inside conversation component function");
-  console.log(conversationId);
+  console.log(conversationIdState);
   const handlerSendMsn = (event) => {
-    if(conversationId){
-      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);
+    if(conversationIdState){
+      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationIdState}/`);
       console.log(ws);
       ws.onopen = () => {
         console.log('WebSocket connection opened');
@@ -136,9 +137,9 @@ function Conversation({
       input_text: event
     }
     console.log("inside send message after sending message");
-    console.log(conversationId);
-    if(conversationId)
-      postMessageData.conversation_id = conversationId;
+    console.log(conversationIdState);
+    if(conversationIdState)
+      postMessageData.conversation_id = conversationIdState;
     axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
         response => {
           const authToken = response.data?.data.access;
@@ -147,11 +148,12 @@ function Conversation({
               'Authorization': `Bearer ${authToken}`
             }
           }).then(response => {
-            let wsConvId = conversationId;
+            let wsConvId = conversationIdState;
             console.log(response);
             if(!wsConvId){
               console.log("new chat coming from response");
               const newChatMsg = response.data?.data?.messages[1];
+              setConversationIdState(response.data?.data?.conversation.id)
               addResponseMessage(newChatMsg);
             }
             else {
