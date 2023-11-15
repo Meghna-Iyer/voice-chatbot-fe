@@ -6,7 +6,7 @@ import './style.scss';
 interface ConversationsProps {
   conversations: any[];
   onConversationSelect: AnyFunction;
-  addResponseMessage: AnyFunction;
+  addResponseMessage: AnyFunction | undefined;
 }
 
 const ConversationList: FC<ConversationsProps> = ({ conversations, onConversationSelect, addResponseMessage }) => {

@@ -50,13 +50,15 @@ function Message({ message, showTimeStamp }: Props) {
   }
   let sanitizedHTML =  message.text + "🔊"
   console.log(message);
-  let audioSrc = `http://127.0.0.1:8000${message.reference}`;
+  let audioSrc:any = `http://127.0.0.1:8000${message.reference}`;
   if(message.text == 'PRE_CREATED'){
     audioSrc = message.reference;
   }
   return (
     <div className={`rcw-${message.sender}`}>
-      <div key={message.id}>
+
+      <div key={// @ts-ignore
+      message.id}>
   {message.reference ? (
     <audio id="audioElement" controls src={audioSrc}></audio>
   ) : (

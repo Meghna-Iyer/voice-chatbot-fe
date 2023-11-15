@@ -40,6 +40,7 @@ type Props = {
   addResponseMessage: AnyFunction;
   onBackButtonClick: AnyFunction;
   handleDropMessages: AnyFunction;
+  conversationId: string;
 };
 
 function Conversation({

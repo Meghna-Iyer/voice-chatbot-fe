@@ -139,6 +139,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const handleVoiceNotePress = () => {
     if(isRecording){
       setIsRecording(false);
+      // @ts-ignore
       mediaRecorder.stop();
       recordedChunks = [];
       setMediaRecorder(null);
@@ -148,9 +149,11 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
       navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
           const mediaRecorderTemp = new MediaRecorder(stream);
+          // @ts-ignore
           setMediaRecorder(mediaRecorderTemp);
           mediaRecorderTemp.ondataavailable = event => {
               if (event.data.size > 0) {
+                // @ts-ignore
                   recordedChunks.push(event.data);
               }
           };

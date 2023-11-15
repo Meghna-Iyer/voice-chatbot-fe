@@ -9,11 +9,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
   entry: './index.js',
   output: {
-    path: path.join(__dirname, '/lib'),
-    filename: 'index.js',
-    library: 'react-chat-widget',
-    libraryTarget: 'umd',
-    clean: true
+    path: path.resolve(__dirname, 'dist'), // Output directory
+    filename: 'bundle.js', // Output bundle file
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -28,9 +26,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
-        exclude: [/node_modules/, /dev/],
-        use: ['babel-loader', 'ts-loader']
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader'
       },
       {
         enforce: 'pre',

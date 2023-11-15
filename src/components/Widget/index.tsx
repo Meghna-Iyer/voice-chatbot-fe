@@ -82,7 +82,7 @@ function Widget({
     }
 
     handleSubmit?.(userInput);
-    dispatch(addUserMessage(userInput, new Date().toLocaleString(), undefined));
+    dispatch(addUserMessage(userInput, new Date().toLocaleString(), ""));
     handleNewUserMessage(userInput);
   }
 

@@ -12,12 +12,12 @@ export function createNewMessage(
   text: string,
   sender: string,
   id?: string,
-  reference?: string,
+  reference?: string | undefined,
   timestamp?: string,
 ): MessageI {
-  let time: Date = new Date(timestamp);
+  let time: Date = new Date(timestamp || "");
   console.log(time);
-  if(isNaN(Date.parse(timestamp)) == true){
+  if(isNaN(Date.parse(timestamp || "")) == true){
     time = new Date();
     console.log(time);
   }
@@ -45,6 +45,7 @@ export function createLinkSnippet(link: LinkParams, id?: string) : Link {
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),
     showAvatar: true,
+    reference: undefined,
     customId: id,
     unread: true
   };
@@ -58,6 +59,7 @@ export function createComponentMessage(component: ElementType, props: any, showA
     sender: MESSAGE_SENDER.RESPONSE,
     timestamp: new Date(),
     showAvatar,
+    reference: undefined,
     customId: id,
     unread: true
   };
