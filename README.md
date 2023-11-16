@@ -1,7 +1,11 @@
 ## Installation
 Use node version 12
-#### npm
+#### Run config
 ```bash
 npm install
 npm run start
+```
+#### Build config
+```bash
+npm run build
 ```
