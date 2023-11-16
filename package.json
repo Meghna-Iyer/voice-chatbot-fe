@@ -30,6 +30,7 @@
     "opus-recorder": "^8.0.5",
     "react-mic": "^12.4.6",
     "react-redux": "^7.2.4",
+    "react-select": "^5.8.0",
     "react-switch": "^7.0.0",
     "recorder-js": "^1.0.7",
     "redux": "^4.1.0",

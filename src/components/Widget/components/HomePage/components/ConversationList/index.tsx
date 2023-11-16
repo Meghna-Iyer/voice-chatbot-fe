@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { AnyFunction } from 'src/utils/types';
+const convDelete = require('../../../../../../../assets/conversation-delete.svg') as string;
 
 import './style.scss';
 
@@ -16,8 +17,13 @@ const ConversationList: FC<ConversationsProps> = ({ conversations, onConversatio
       <h2>Your existing chats appear here...</h2>
       <ul>
         {conversations.map((conversation, index) => (
-          <li onClick={() => onConversationSelect(conversation,addResponseMessage)}key={index}>{conversation.title}</li>
-        ))}
+      <li key={index}>
+        <span onClick={() => onConversationSelect(conversation, addResponseMessage)}>
+          {conversation.title}
+        </span>
+        <button><img src={convDelete} alt={"CD"} /></button>
+      </li>
+    ))}
       </ul>
     </div>
   );

@@ -1,27 +1,4 @@
-// @import 'variables/colors';
-// @import 'common';
 
-// .rcw-messages-container {
-//   background-color: $white;
-//   height: 50vh;
-//   max-height: 410px;
-//   overflow-y: scroll;
-//   padding-top: 10px;
-//   -webkit-overflow-scrolling: touch;
-// }
-
-// .rcw-full-screen {
-
-//   .rcw-messages-container {
-//     @include messages-container-fs;
-//   }
-// }
-
-// @media screen and (max-width: 800px)  {
-//   .rcw-messages-container {
-//     @include messages-container-fs;
-//   }
-// }
 .conversations {
   // border: 1px solid #ccc;
   // max-width: 300px;
@@ -44,298 +21,33 @@
   padding: 0;
   list-style-type: none;
   margin: 0 auto;
-
-
 }
 
 .conversations li {
-  margin: 0; /* Added to remove default margin */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
   margin-bottom: 5px;
   padding: 10px;
-  padding-top: 20px;
-  padding-left: 15px;
   border-radius: 5px;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide any overflowing content */
-  text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
-  max-width: 320px;
-
-
   background: rgba(153, 117, 93, 0.7);
   border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   height: 40px;
+  overflow: hidden;
+  max-width: 320px; /* Set the maximum width for the entire list item */
 }
 
-
-
-
-
-
-/* Widget Home page */
-
-// box-sizing: border-box;
-
-// position: relative;
-// width: 488px;
-// height: 740px;
-
-// background: #F9F7F7;
-// border: 1px solid #000000;
-// box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.4);
-// border-radius: 5px;
-
-
-// /* Rectangle 1 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 71px;
-// left: 0px;
-// top: 0px;
-
-// background: #D3BEAE;
-// border: 1.5px solid #000000;
-// box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-
-// /* Line 1 */
-
-// position: absolute;
-// width: 45px;
-// height: 0px;
-// left: 430px;
-// top: 51px;
-
-// border: 8px solid #FFFFFF;
-// box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.45);
-
-
-// /* image 1 */
-
-// position: absolute;
-// width: 45px;
-// height: 43.47px;
-// left: 8px;
-// top: 14px;
-
-// background: url(image.png);
-// opacity: 0.6;
-// filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-
-// /* Ok. Thank you */
-
-// position: absolute;
-// width: 109px;
-// height: 38px;
-// left: 144px;
-// top: 431px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 16px;
-// line-height: 19px;
-
-// color: #FFFFFF;
-/* Rectangle 11 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 86px;
-// left: 0px;
-// top: 370px;
-
-// background: rgba(153, 117, 93, 0.7);
-
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-
-
-// /* Rectangle 9 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 86px;
-// left: 0px;
-// top: 456px;
-
-// background: rgba(153, 117, 93, 0.7);
-// border: 1px solid #000000;
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-
-// /* Rectangle 12 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 86px;
-// left: 0px;
-// top: 654px;
-
-// background: rgba(153, 117, 93, 0.7);
-// border: 1px solid #000000;
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-// border-radius: 10px;
-
-
-// /* Start a new chat.. */
-
-// position: absolute;
-// width: 167px;
-// height: 24px;
-// left: 40px;
-// top: 678px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 20px;
-// line-height: 24px;
-
-// color: #000000;
-
-
-
-// /* Rectangle 10 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 86px;
-// left: 0px;
-// top: 284px;
-
-// background: rgba(153, 117, 93, 0.7);
-// border: 1px solid #000000;
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-
-// /* Understanding Newton’s Law */
-
-// position: absolute;
-// width: 277px;
-// height: 24px;
-// left: 30px;
-// top: 315px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 20px;
-// line-height: 24px;
-
-// color: rgba(20, 20, 20, 0.8);
-
-
-
-// /* Rectangle 11 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 488px;
-// height: 86px;
-// left: 0px;
-// top: 370px;
-
-// background: rgba(153, 117, 93, 0.7);
-// border: 1.5px solid #000000;
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-
-// /* image 5 */
-
-// position: absolute;
-// width: 22px;
-// height: 22px;
-// left: 408px;
-// top: 401px;
-
-// background: url(image.png);
-
-
-// /* image 6 */
-
-// position: absolute;
-// width: 22px;
-// height: 22px;
-// left: 408px;
-// top: 487px;
-
-// background: url(image.png);
-
-
-// /* Gameplay of FIFA 23 */
-
-// position: absolute;
-// width: 196px;
-// height: 24px;
-// left: 30px;
-// top: 401px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 20px;
-// line-height: 24px;
-
-// color: rgba(0, 0, 0, 0.8);
-
-
-
-// /* Frame 2 */
-
-// position: absolute;
-// width: 100px;
-// height: 100px;
-// left: 74px;
-// top: 369px;
-
-
-
-// /* Science project ideas */
-
-// position: absolute;
-// width: 203px;
-// height: 24px;
-// left: 30px;
-// top: 487px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 400;
-// font-size: 20px;
-// line-height: 24px;
-
-// color: rgba(0, 0, 0, 0.8);
-
-
-
-// /* Hello there. How can we help? */
-
-// position: absolute;
-// width: 301px;
-// height: 88px;
-// left: 48px;
-// top: 133px;
-
-// font-family: 'Inter';
-// font-style: normal;
-// font-weight: 300;
-// font-size: 36px;
-// line-height: 44px;
-// text-transform: lowercase;
-
-// color: #000000;
-
+.conversations li span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1; /* Allow the title to grow and take available space */
+}
+
+.conversations li button {
+  flex-shrink: 0;
+  background: none; 
+  border: none;
+}
