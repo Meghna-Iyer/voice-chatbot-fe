@@ -136,10 +136,9 @@ function WidgetLayout({
       console.log("whattttt")
       console.log(conversationInfo);
       const postData = {
-        username: "Megh",
-        password: "Test@12345"
+        refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
       }
-      axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
         response => {
           const authToken = response.data?.data.access;
           axios.get(`http://127.0.0.1:8000/core/messages/${conversationInfo.id}/`, {

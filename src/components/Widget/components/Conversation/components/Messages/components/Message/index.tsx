@@ -19,13 +19,12 @@ function Message({ message, showTimeStamp }: Props) {
     }
     else  {
       const postData = {
-        username: "Megh",
-        password: "Test@12345"
+        refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
       }
       const ttsData = {
         text: message.text
       }
-      axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+      axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
         response => {
           const authToken = response.data?.data.access;
           axios.post(`http://127.0.0.1:8000/core/text-to-speech/`,ttsData, {

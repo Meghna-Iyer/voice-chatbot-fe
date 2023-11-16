@@ -186,8 +186,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                 };
               }
               const postData = {
-                username: "Megh",
-                password: "Test@12345"
+                refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
               }
               const formData = new FormData();
               formData.append("audio", audioBlob, 'test_audio.wav');
@@ -201,7 +200,7 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               message.created = new Date().toLocaleString();
               console.log(message);
               addResponseMessage(message);
-              axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+              axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
                 response => {
                   const authToken = response.data?.data.access;
                   axios.post(`http://127.0.0.1:8000/core/chatbot/voice/`,formData, {

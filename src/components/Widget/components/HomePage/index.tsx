@@ -57,10 +57,9 @@ function HomePage({
     const containerDiv = document.getElementById('rcw-conversation-container');
     setContainerDiv(containerDiv);
     const postData = {
-      username: "Megh",
-        password: "Test@12345"
+      refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
     }
-    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+    axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
       response => {
         const authToken = response.data?.data.access;
         axios.get('http://127.0.0.1:8000/core/conversations/', {

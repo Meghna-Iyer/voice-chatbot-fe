@@ -131,8 +131,7 @@ function Conversation({
     }
 
     const postData = {
-      username: "Megh",
-        password: "Test@12345"
+      refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
     }
     const postMessageData: any = {
       input_text: event
@@ -141,7 +140,7 @@ function Conversation({
     console.log(conversationIdState);
     if(conversationIdState)
       postMessageData.conversation_id = conversationIdState;
-    axios.post('http://127.0.0.1:8000/user/auth/token/', postData).then(
+    axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
         response => {
           const authToken = response.data?.data.access;
           axios.post('http://127.0.0.1:8000/core/chatbot/text/', postMessageData, {
