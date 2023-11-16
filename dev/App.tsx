@@ -45,7 +45,7 @@ export default class App extends Component {
     return (
       <Widget
         title="Hello Meghna!"
-        subtitle="Friday Chat: Explore, Ask, Chat! 🚀"
+        subtitle="FRIDAY: Explore, Ask, Chat! 🚀"
         senderPlaceHolder="Enter your message here ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleResponseMessage={this.handleResponseMessage}
