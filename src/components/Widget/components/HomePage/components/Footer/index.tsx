@@ -7,10 +7,10 @@ interface FooterProps {
 const Footer: FC<FooterProps> = ({ onConversationSelect }) => {
   const conversation: any = {}
   conversation.isNew = true;
-  conversation.title = "Hey there! How's it going?"
+  conversation.title = "Welcome to Friday's World 🌐💬"
   return (
     <div className="footer">
-      <p onClick={() => onConversationSelect(conversation, undefined)}> start your new chat...</p>
+      <p onClick={() => onConversationSelect(conversation, undefined)}> Fresh chat, let's dive in! 🚀💬</p>
     </div>
   );
 };

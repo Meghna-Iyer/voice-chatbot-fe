@@ -44,8 +44,8 @@ export default class App extends Component {
     console.log(this.handleDropMessages);
     return (
       <Widget
-        title="Hello there!"
-        subtitle="How can we help?"
+        title="Hello Meghna!"
+        subtitle="Friday Chat: Explore, Ask, Chat! 🚀"
         senderPlaceHolder="Enter your message here ..."
         handleNewUserMessage={this.handleNewUserMessage}
         handleResponseMessage={this.handleResponseMessage}

@@ -2,7 +2,6 @@
 @import 'common';
 
 .rcw-conversation-container {
-
   .rcw-header {
     background-color: #D3BEAE;
     border-radius: 10px 10px 0 0;
@@ -11,68 +10,99 @@
     flex-direction: column;
     text-align: center;
     padding: 15px 0 25px;
+
+
+
+    .title-container {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      justify-content: space-between;
+
+      .conversation-title {
+        font-size: 20px;
+        margin-left: 25px;
+        margin-top: 0%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 300px;
+        margin-right: 10px;
+      }
+
+      .editButton {
+        background-color: #D3BEAE;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        flex-shrink: 0;
+
+        &:hover {
+          background-color: #A7886E;
+        }
+      }
+
+      .editInput {
+        background-color: #D3BEAE;
+        border: #A7886E;
+        outline: 1px solid #A7886E;
+        margin-left: 30px;
+        font-size: 19px;
+        flex-grow: 1;
+        max-width: 300px;
+        color: white;
+      }
+
+    }
+
+
+    .backIcon {
+      background-color: #D3BEAE;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      border: none;
+    }
+
+    .backImg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .rcw-close-button {
+      display: none;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
   }
 
-  .conversation-title {
-    font-size: 20px;
-    margin-left: 25px;
-    margin-top: 0%;
-    align-content: right;
-    white-space: nowrap;
-    overflow: hidden; /* Hide any overflowing content */
-    text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
-    max-width: 300px;
-  }
-  .backIcon {
-    background-color: #D3BEAE;
-    top: 10px;
-    left: 10px;
-    width: 40px; /* Set the width of the SVG icon */
-    height: 40px; /* Set the height of the SVG icon */
-    border: none;
-  }
+  .rcw-full-screen {
+    .rcw-header {
+      @include header-fs;
+    }
 
-  .backImg {
-    width: 40px; /* Set the width of the SVG icon */
-    height: 40px; /* Set the height of the SVG icon */
+    .rcw-title {
+      @include title-fs;
+    }
+
+    .rcw-close-button {
+      @include close-button-fs;
+    }
+
+    .rcw-close {
+      @include close-fs;
+    }
   }
 
-  .rcw-close-button {
-    display: none;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-}
-
-.rcw-full-screen {
-
-  .rcw-header {
-    @include header-fs;
-  }
-
-  .rcw-title {
-    @include title-fs;
-  }
-
-  .rcw-close-button {
-    @include close-button-fs;
-  }
-
-  .rcw-close {
-    @include close-fs;
-  }
-}
-
-@media screen and (max-width: 800px) {
-
-  .rcw-conversation-container {
-
+  @media screen and (max-width: 800px) {
     .rcw-header {
       @include header-fs;
     }

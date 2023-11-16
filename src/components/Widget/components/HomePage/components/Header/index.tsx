@@ -56,11 +56,11 @@ function Header({ title, subtitle, toggleChat, showCloseButton, titleAvatar }: P
         <img className="settingsImg" src={settingsIcon} />
       </button>
       {isSetttingsOpen && <Settings onClose={closeSettings} userSettings={userSettings}/>}
-      <h4 className="rcw-title">
+      <h4 className={`rcw-title ${isSetttingsOpen ? 'blurred' : ''}`}>
         {titleAvatar && <img src={titleAvatar} className="avatar" alt="profile" />}
         {title}
       </h4>
-      <span>{subtitle}</span>
+      <span className={`subtitle ${isSetttingsOpen ? 'blurred' : ''}`}>{subtitle}</span>
     </div>
   );
 }

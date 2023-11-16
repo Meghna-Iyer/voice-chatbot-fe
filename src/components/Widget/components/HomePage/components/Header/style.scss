@@ -1,6 +1,10 @@
 @import 'variables/colors';
 @import 'common';
 
+.blurred {
+  filter: blur(5px); /* Adjust the blur intensity as needed */
+}
+
 .rcw-conversation-container {
 
   .rcw-header {
