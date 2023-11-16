@@ -9,3 +9,4 @@ npm run start
 ```bash
 npm run build
 ```
+Would work in collaboration with BE implementation.
