@@ -186,8 +186,8 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                 };
               }
               const postData = {
-                username: "Anandh",
-                password: "test@12345"
+                username: "Megh",
+                password: "Test@12345"
               }
               const formData = new FormData();
               formData.append("audio", audioBlob, 'test_audio.wav');

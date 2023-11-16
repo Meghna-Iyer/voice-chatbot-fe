@@ -19,8 +19,8 @@ function Message({ message, showTimeStamp }: Props) {
     }
     else  {
       const postData = {
-        username: "Anandh",
-        password: "test@12345"
+        username: "Megh",
+        password: "Test@12345"
       }
       const ttsData = {
         text: message.text
