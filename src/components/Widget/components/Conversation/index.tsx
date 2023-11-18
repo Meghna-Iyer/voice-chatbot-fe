@@ -202,6 +202,7 @@ function Conversation({
         titleAvatar={titleAvatar}
         onBackButtonClick={onBackButtonClick}
         handleDropMessages={handleDropMessages}
+        conversationIdState={conversationIdState}
       />
       <Messages
         profileAvatar={profileAvatar}
