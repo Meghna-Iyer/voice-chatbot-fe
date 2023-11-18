@@ -8,9 +8,10 @@ interface ConversationsProps {
   conversations: any[];
   onConversationSelect: AnyFunction;
   addResponseMessage: AnyFunction | undefined;
+  onConversationDelete: AnyFunction;
 }
 
-const ConversationList: FC<ConversationsProps> = ({ conversations, onConversationSelect, addResponseMessage }) => {
+const ConversationList: FC<ConversationsProps> = ({ conversations, onConversationSelect, addResponseMessage, onConversationDelete }) => {
 
   return (
     <div className="conversations">
@@ -21,7 +22,7 @@ const ConversationList: FC<ConversationsProps> = ({ conversations, onConversatio
         <span onClick={() => onConversationSelect(conversation, addResponseMessage)}>
           {conversation.title}
         </span>
-        <button><img src={convDelete} alt={"CD"} /></button>
+        <button onClick={() => onConversationDelete(conversation)}><img src={convDelete} alt={"CD"} /></button>
       </li>
     ))}
       </ul>

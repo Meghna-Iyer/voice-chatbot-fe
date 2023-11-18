@@ -82,6 +82,31 @@ function HomePage({
 
   }, []);
 
+  const onConversationDelete = (conversationInfo) {
+    const postData = {
+      refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
+    }
+    axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
+        response => {
+          const authToken = response.data?.data.access;
+          axios.delete(`http://127.0.0.1:8000/core/conversation/${conversationInfo.id}/`, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            }
+          }).then(response => {
+            console.log(response);
+            const newConvUpdate: any = conversationList.reduce((convList:any[], conv:any)=> {
+              if(conversationInfo.id !== conv.id){
+                convList.push(conv);
+              }
+              return convList;
+            }, []);
+            setConversationList(newConvUpdate);
+          })
+        }
+      )
+  }
+
   const initResize = (e) => {
     if (resizable) {
       startX = e.clientX;
@@ -117,7 +142,7 @@ function HomePage({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect} addResponseMessage={addResponseMessage}/>
+      <ConversationList conversations={conversationList} onConversationSelect={onConversationSelect} addResponseMessage={addResponseMessage} onConversationDelete={onConversationDelete}/>
       <Footer onConversationSelect={onConversationSelect} />
     </div>
   );
