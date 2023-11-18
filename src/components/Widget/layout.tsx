@@ -85,6 +85,7 @@ function WidgetLayout({
 
   const [currentConversation, setCurrentConversation] = useState(null);
   const [conversationWithMsgs, setConversationWithMsgs] = useState(null);
+  const [websocketState, setWebsocketState] = useState(null);
 
   const messageRef = useRef<HTMLDivElement | null>(null);
 
@@ -133,6 +134,24 @@ function WidgetLayout({
       setCurrentConversation(conversationInfo);
     }
     else {
+      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationInfo.id}/`);
+      setWebsocketState(ws);
+      console.log(ws);
+      ws.onopen = () => {
+        console.log('WebSocket connection opened');
+      };
+      ws.onmessage = (event) => {
+        console.log('Message received: ' + event.data);
+        const messagePayload = JSON.parse(event.data);
+        console.log(messagePayload);
+        if(messagePayload?.message?.message_user_type == "BOT") {
+          console.log('gonna send bot message');
+          addResponseMessage(messagePayload?.message);
+        }
+      };
+      ws.onclose = () => {
+        console.log('WebSocket connection closed');
+      }
       console.log("whattttt")
       console.log(conversationInfo);
       const postData = {
@@ -170,6 +189,8 @@ function WidgetLayout({
     setCurrentConversation(null);
     setConversationWithMsgs(null);
     handleDropMessages();
+    websocketState.close();
+    setWebsocketState(null);
   }
   return (
     <div
@@ -206,6 +227,7 @@ function WidgetLayout({
           addResponseMessage={addResponseMessage}
           onBackButtonClick={onBackButtonClick}
           handleDropMessages={handleDropMessages}
+          webSocketState={websocketState}
         />) : (<HomePage
           title={title}
           subtitle={subtitle}

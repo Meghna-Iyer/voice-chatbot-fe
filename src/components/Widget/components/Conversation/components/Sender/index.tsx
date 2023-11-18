@@ -25,9 +25,11 @@ type Props = {
   onChangeSize: (event: any) => void;
   onTextInputChange?: (event: any) => void;
   addResponseMessage: AnyFunction;
+  conversationIdState: string;
+  setConversationIdState: AnyFunction;
 }
 
-function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize, conversationId, addResponseMessage  }: Props, ref) {
+function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt, onPressEmoji, onChangeSize, conversationId, addResponseMessage, conversationIdState, setConversationIdState  }: Props, ref) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
   const inputRef = useRef<HTMLDivElement>(null!);
   const [isRecording, setIsRecording] = useState(false);
@@ -37,7 +39,6 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
   const [height, setHeight] = useState(0)
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioBlob, setAudioBlob] = useState(null);
-  const [conversationIdState, setConversationIdState] = useState(conversationId);
   let recordedChunks = [];
   // @ts-ignore
   useEffect(() => { if (showChat && autofocus) inputRef.current?.focus(); }, [showChat]);

@@ -19,7 +19,7 @@ type Props = {
 function Header({ title, toggleChat, showCloseButton, titleAvatar, onBackButtonClick, handleDropMessages }: Props) {
   const [editing, setEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
-  
+
   const handleEditButtonClick = () => {
     setEditing(true);
   };

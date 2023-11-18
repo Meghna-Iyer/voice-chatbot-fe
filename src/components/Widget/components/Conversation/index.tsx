@@ -114,20 +114,20 @@ function Conversation({
   console.log(conversationIdState);
   const handlerSendMsn = (event) => {
     if(conversationIdState){
-      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationIdState}/`);
-      console.log(ws);
-      ws.onopen = () => {
-        console.log('WebSocket connection opened');
-      };
-      ws.onmessage = (event) => {
-        console.log('Message received: ' + event.data);
-        const messagePayload = JSON.parse(event.data);
-        console.log(messagePayload);
-        if(messagePayload?.message?.message_user_type == "BOT") {
-          console.log('gonna send bot message');
-          addResponseMessage(messagePayload?.message);
-        }
-      };
+      // const ws = new WebSocket(`ws://localhost:8000/ws/chat/${conversationIdState}/`);
+      // console.log(ws);
+      // ws.onopen = () => {
+      //   console.log('WebSocket connection opened');
+      // };
+      // ws.onmessage = (event) => {
+      //   console.log('Message received: ' + event.data);
+      //   const messagePayload = JSON.parse(event.data);
+      //   console.log(messagePayload);
+      //   if(messagePayload?.message?.message_user_type == "BOT") {
+      //     console.log('gonna send bot message');
+      //     addResponseMessage(messagePayload?.message);
+      //   }
+      // };
     }
 
     const postData = {
@@ -155,9 +155,7 @@ function Conversation({
               const newChatMsg = response.data?.data?.messages[1];
               setConversationIdState(response.data?.data?.conversation.id)
               addResponseMessage(newChatMsg);
-            }
-            else {
-              const ws = new WebSocket(`ws://localhost:8000/ws/chat/${wsConvId}/`);
+              const ws = new WebSocket(`ws://localhost:8000/ws/chat/${response.data?.data?.conversation.id}/`);
               console.log(ws);
               ws.onopen = () => {
                 console.log('WebSocket connection opened');
@@ -172,7 +170,6 @@ function Conversation({
                 }
               };
             }
-
           })
         }
       )
@@ -218,6 +215,8 @@ function Conversation({
         buttonAlt={sendButtonAlt}
         onPressEmoji={togglePicker}
         onChangeSize={setOffset}
+        conversationIdState={conversationIdState}
+        setConversationIdState={setConversationIdState}
       />
     </div>
   );
