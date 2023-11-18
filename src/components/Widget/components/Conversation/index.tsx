@@ -155,6 +155,7 @@ function Conversation({
             if(!wsConvId){
               console.log("new chat coming from response");
               const newChatMsg = response.data?.data?.messages[1];
+              newChatMsg.id = newChatMsg.message_id;
               setConversationIdState(response.data?.data?.conversation.id)
               addResponseMessage(newChatMsg);
               const ws = new WebSocket(`ws://localhost:8000/ws/chat/${response.data?.data?.conversation.id}/`);
@@ -167,10 +168,11 @@ function Conversation({
                 console.log('Message received: ' + event.data);
                 const messagePayload = JSON.parse(event.data);
                 console.log(messagePayload);
-                if(messagePayload?.message?.message_user_type == "BOT") {
-                  console.log('gonna send bot message');
-                  addResponseMessage(messagePayload?.message);
-                }
+                // if(messagePayload?.message?.message_user_type == "BOT") {
+                console.log('gonna send bot message');
+                messagePayload.message.id = messagePayload.message.message_id;
+                addResponseMessage(messagePayload?.message);
+                // }
               };
               ws.onclose = () => {
                 console.log("websocket connection closed");
@@ -180,7 +182,8 @@ function Conversation({
           })
         }
       )
-    sendMessage(event)
+    if(!conversationIdState)
+      sendMessage(event)
     if(pickerStatus) setPicket(false)
   }
   console.log('test onbackbutton click');

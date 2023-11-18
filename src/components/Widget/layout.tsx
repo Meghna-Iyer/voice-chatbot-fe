@@ -146,6 +146,7 @@ function WidgetLayout({
         console.log(messagePayload);
         // if(messagePayload?.message?.message_user_type == "BOT") {
           console.log('gonna send message');
+          messagePayload.message.id = messagePayload.message.message_id;
           addResponseMessage(messagePayload?.message);
         // }
       };

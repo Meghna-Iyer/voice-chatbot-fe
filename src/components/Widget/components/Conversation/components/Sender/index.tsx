@@ -180,10 +180,11 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                   console.log('Message received: ' + event.data);
                   const messagePayload = JSON.parse(event.data);
                   console.log(messagePayload);
-                  if(messagePayload?.message?.message_user_type == "BOT") {
+                  // if(messagePayload?.message?.message_user_type == "BOT") {
                     console.log('gonna send bot message');
+                    messagePayload.message.id = messagePayload.message.message_id;
                     addResponseMessage(messagePayload?.message);
-                  }
+                  // }
                 };
               }
               const postData = {
@@ -194,13 +195,16 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
               if(conversationIdState) {
                 formData.append("conversation_id", conversationIdState)
               }
-              let message: any = {};
-              message.message_user_type = 'user'
-              message.content = 'PRE_CREATED';
-              message.reference = new String(audioUrl);
-              message.created = new Date().toLocaleString();
-              console.log(message);
-              addResponseMessage(message);
+              if(!conversationIdState){
+                let message: any = {};
+                message.message_user_type = 'user'
+                message.content = 'PRE_CREATED';
+                message.reference = new String(audioUrl);
+                message.created = new Date().toLocaleString();
+                console.log(message);
+                addResponseMessage(message);
+              }
+
               axios.post('http://127.0.0.1:8000/user/auth/token/refresh/', postData).then(
                 response => {
                   const authToken = response.data?.data.access;
@@ -216,7 +220,24 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
                     if(!conversationIdState){
                       setConversationIdState(response.data?.data?.conversation.id)
                       // addResponseMessage(incomingMessages[0]);
+                      incomingMessages[1].id = incomingMessages[1].message_id;
                       addResponseMessage(incomingMessages[1]);
+                      console.log(`Websocket opening for ${conversationIdState}`)
+                      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${response.data?.data?.conversation.id}/`);
+                      console.log(ws);
+                      ws.onopen = () => {
+                        console.log('WebSocket connection opened');
+                      };
+                      ws.onmessage = (event) => {
+                        console.log('Message received: ' + event.data);
+                        const messagePayload = JSON.parse(event.data);
+                        console.log(messagePayload);
+                        // if(messagePayload?.message?.message_user_type == "BOT") {
+                          console.log('gonna send bot message');
+                          messagePayload.message.id = messagePayload.message.message_id;
+                          addResponseMessage(messagePayload?.message);
+                  // }
+                };
                     }
 
                   })

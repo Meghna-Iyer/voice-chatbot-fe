@@ -50,10 +50,15 @@ function Messages({ profileAvatar, profileClientAvatar, showTimeStamp }: Props) 
   // }
 
   const isClient = (sender) => sender === MESSAGE_SENDER.CLIENT;
+  console.log(`Messages before filtering ${JSON.stringify(messages)}`);
 
+  const filteredMessages = messages.filter((message:any,index)=> {
+    return index === messages.findIndex((iMessage:any) => message.customId === iMessage.customId);
+  })
+  console.log(`Messages before rendering ${JSON.stringify(filteredMessages)}`);
   return (
     <div id="messages" className="rcw-messages-container" ref={messageRef}>
-      {messages?.map((message, index) =>
+      {filteredMessages?.map((message, index) =>
         <div className={`rcw-message ${isClient(message.sender) ? 'rcw-message-client' : ''}`}
           key={`${index}-${format(message.timestamp, 'd/MM hh:mm.aaaa')}`}>
           {((profileAvatar && !isClient(message.sender)) || (profileClientAvatar && isClient(message.sender))) &&
