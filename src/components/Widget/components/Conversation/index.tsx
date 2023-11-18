@@ -41,6 +41,7 @@ type Props = {
   onBackButtonClick: AnyFunction;
   handleDropMessages: AnyFunction;
   conversationId: string;
+  setWebsocketState: AnyFunction;
 };
 
 function Conversation({
@@ -66,7 +67,8 @@ function Conversation({
   testMessages,
   addResponseMessage,
   onBackButtonClick,
-  handleDropMessages
+  handleDropMessages,
+  setWebsocketState
 }: Props) {
   const [containerDiv, setContainerDiv] = useState<HTMLElement | null>();
   const [conversationIdState, setConversationIdState] = useState(conversationId);
@@ -156,6 +158,7 @@ function Conversation({
               setConversationIdState(response.data?.data?.conversation.id)
               addResponseMessage(newChatMsg);
               const ws = new WebSocket(`ws://localhost:8000/ws/chat/${response.data?.data?.conversation.id}/`);
+              console.log(setWebsocketState)
               console.log(ws);
               ws.onopen = () => {
                 console.log('WebSocket connection opened');
@@ -169,6 +172,10 @@ function Conversation({
                   addResponseMessage(messagePayload?.message);
                 }
               };
+              ws.onclose = () => {
+                console.log("websocket connection closed");
+              }
+              setWebsocketState(ws);
             }
           })
         }

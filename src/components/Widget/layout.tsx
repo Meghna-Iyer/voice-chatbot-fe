@@ -144,10 +144,10 @@ function WidgetLayout({
         console.log('Message received: ' + event.data);
         const messagePayload = JSON.parse(event.data);
         console.log(messagePayload);
-        if(messagePayload?.message?.message_user_type == "BOT") {
-          console.log('gonna send bot message');
+        // if(messagePayload?.message?.message_user_type == "BOT") {
+          console.log('gonna send message');
           addResponseMessage(messagePayload?.message);
-        }
+        // }
       };
       ws.onclose = () => {
         console.log('WebSocket connection closed');
@@ -189,7 +189,13 @@ function WidgetLayout({
     setCurrentConversation(null);
     setConversationWithMsgs(null);
     handleDropMessages();
-    websocketState.close();
+    if(websocketState){
+      console.log(websocketState);
+      websocketState.close();
+    }
+    else {
+      console.warn("Websocket is null. Closing is skipped");
+    }
     setWebsocketState(null);
   }
   return (
@@ -227,7 +233,7 @@ function WidgetLayout({
           addResponseMessage={addResponseMessage}
           onBackButtonClick={onBackButtonClick}
           handleDropMessages={handleDropMessages}
-          webSocketState={websocketState}
+          setWebsocketState={setWebsocketState}
         />) : (<HomePage
           title={title}
           subtitle={subtitle}
