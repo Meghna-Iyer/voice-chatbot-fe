@@ -82,7 +82,7 @@ function HomePage({
 
   }, []);
 
-  const onConversationDelete = (conversationInfo) {
+  const onConversationDelete = (conversationInfo) => {
     const postData = {
       refresh: localStorage.getItem('refreshToken')?.replace(/^"(.+(?="$))"$/, '$1')
     }
@@ -105,7 +105,7 @@ function HomePage({
           })
         }
       )
-  }
+  };
 
   const initResize = (e) => {
     if (resizable) {

@@ -54,6 +54,7 @@ function Header({ title, toggleChat, showCloseButton, titleAvatar, onBackButtonC
               'Authorization': `Bearer ${authToken}`
             }
           }).then(response => {
+            //@ts-ignore
             if(response.ok){
               setEditedTitle(editedTitle);
             }
