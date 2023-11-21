@@ -8,7 +8,7 @@ const Settings = ({ onClose, userSettings }) => {
   const [checked, setChecked] = useState(userSettings.isChatHistoryOn);
   const [languagePref, setLanguagePref] = useState(userSettings.langPreference);
   let userSettingsUpdate: any = {}
-  const languagesList = ["en","es","en-us","en-uk"];
+  const languagesList = ["en", "fr", "es", "de", "it"];
   const handleChange = val => {
     console.log(val);
     setChecked(val)
